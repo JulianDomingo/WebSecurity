@@ -25,14 +25,14 @@
         if (is_blank($_POST['first_name'])) {
           $error_prints[] = "First name cannot be blank.";
         } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
-          $error_prints[] = "First name must be between 2 and 20 characters.";
+          $error_prints[] = "First name must be between 2 and 255 characters.";
         } else if (preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $first_name) == 0) {
           $error_prints[] = "First name must be a valid format.";
         }
         if (is_blank($_POST['last_name'])) {
           $error_prints[] = "Last name cannot be blank.";
-        } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 30])) {
-          $error_prints[] = "Last name must be between 2 and 30 characters.";
+        } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
+          $error_prints[] = "Last name must be between 2 and 255 characters.";
         } else if (preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $last_name) == 0) {
           $error_prints[] = "Last name must be a valid format.";
         }
@@ -43,10 +43,15 @@
         } elseif (!has_valid_email_format($email)) {
           $error_prints[] = "Email must be a valid format.";
         }
+        // Sanitize email.
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
         if (is_blank($_POST['username'])) {
           $error_prints[] = "Username cannot be blank.";
         } elseif (!has_length($_POST['username'], ['min' => 8, 'max' => 255])) {
           $error_prints[] = "Username must be between 8 and 255 characters.";
+        } else if (preg_match('/\A[A-Za-z\s_]+\Z/', $username) == 0) {
+          $error_prints[] = "Last name must be a valid format.";
         }
 
         // Unique Username.
@@ -54,7 +59,7 @@
         $query = db_query($db, $sql);
         if (db_num_rows($query) > 0) {
             // Username already exists in database. Do not add it.
-            $error_prints[] = "Username already exists. Change it to something else.";
+            $error_prints[] = "Username already exists.";
         }
 
         if (empty($error_prints)) {
@@ -84,7 +89,6 @@
             }
         }
         else {
-            echo "<h2>Errors found.</h2>";
             echo display_errors($error_prints);
         }
     }
@@ -93,6 +97,7 @@
 
 <html lang="en">
   <head>
+    <link href="../css/register.css" type="text/css" rel="stylesheet">
   </head>
   <body>
     <div id="main-content">

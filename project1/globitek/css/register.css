@@ -1,0 +1,13 @@
+#main-content {
+	display: block;
+	text-align: center;
+}
+
+.errors {
+	text-align: center;
+}
+
+.errors ul {
+	text-align: left;
+	display: inline-block;
+}
