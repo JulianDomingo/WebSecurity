@@ -1,13 +1,8 @@
 <?php
   require_once('../private/initialize.php');
-
-  $first_name = '';
-  $last_name = '';
-  $email = '';
-  $username = '';
-
-  $error_prints = [];
-
+  $has_errors = False;
+  $inputs = array("First name"=>"", "Last name"=>"", "Email"=>"", "Username"=>"");
+  $errors = array("First name"=>"", "Last name"=>"", "Email"=>"", "Username"=>"");
 ?>
 
 <?php $page_title = 'Register'; ?>
@@ -15,64 +10,31 @@
 
 <?php
     if (is_post_request()) {
-
         // Begin reading the text inputs.
-        $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : "";
-        $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : "";
-        $email = isset($_POST['email']) ? $_POST['email'] : "";
-        $username = isset($_POST['username']) ? $_POST['username'] : "";
+        $inputs['First name'] = isset($_POST['first_name']) ? $_POST['first_name'] : "";
+        $inputs['Last name'] = isset($_POST['last_name']) ? $_POST['last_name'] : "";
+        $inputs['Email'] = isset($_POST['email']) ? $_POST['email'] : "";
+        $inputs['Username'] = isset($_POST['username']) ? $_POST['username'] : "";
 
-        if (is_blank($_POST['first_name'])) {
-          $error_prints[] = "First name cannot be blank.";
-        } elseif (!has_length($_POST['first_name'], ['min' => 2, 'max' => 255])) {
-          $error_prints[] = "First name must be between 2 and 255 characters.";
-        } else if (preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $first_name) == 0) {
-          $error_prints[] = "First name must be a valid format.";
-        }
-        if (is_blank($_POST['last_name'])) {
-          $error_prints[] = "Last name cannot be blank.";
-        } elseif (!has_length($_POST['last_name'], ['min' => 2, 'max' => 255])) {
-          $error_prints[] = "Last name must be between 2 and 255 characters.";
-        } else if (preg_match('/\A[A-Za-z\s\-,\.\']+\Z/', $last_name) == 0) {
-          $error_prints[] = "Last name must be a valid format.";
-        }
-        if (is_blank($_POST['email'])) {
-          $error_prints[] = "Email cannot be blank.";
-        } elseif (!has_length($_POST['email'], ['min' => 8, 'max' => 255])) {
-          $error_prints[] = "Email must be between 8 and 255 characters.";
-        } elseif (!has_valid_email_format($email)) {
-          $error_prints[] = "Email must be a valid format.";
-        }
-        // Sanitize email.
-        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        $errors = validate("First name", $inputs['First name'], $errors);
+        $errors = validate("Last name", $inputs['Last name'], $errors);
+        $errors = validate("Email", $inputs['Email'], $errors);
+        $errors = validate("Username", $inputs['Username'], $errors);
 
-        if (is_blank($_POST['username'])) {
-          $error_prints[] = "Username cannot be blank.";
-        } elseif (!has_length($_POST['username'], ['min' => 8, 'max' => 255])) {
-          $error_prints[] = "Username must be between 8 and 255 characters.";
-        } else if (preg_match('/\A[A-Za-z\s_]+\Z/', $username) == 0) {
-          $error_prints[] = "Last name must be a valid format.";
-        }
+        $inputs['Email'] = filter_var($inputs['Email'], FILTER_SANITIZE_EMAIL);
 
-        // Unique Username.
-        $sql ="SELECT username FROM users WHERE username = '$username'";
-        $query = db_query($db, $sql);
-        if (db_num_rows($query) > 0) {
-            // Username already exists in database. Do not add it.
-            $error_prints[] = "Username already exists.";
-        }
+        $errors = check_unique_username($inputs['Username'], $errors, $db);
 
-        if (empty($error_prints)) {
-            // Escape strings that will be used in a SQL statement.
-            $first_name = mysqli_real_escape_string($db, $first_name);
-            $last_name = mysqli_real_escape_string($db, $last_name);
-            $email = mysqli_real_escape_string($db, $email);
-            $username = mysqli_real_escape_string($db, $username);
+        if (has_no_errors($errors)) {
+            $inputs["First name"] = mysqli_real_escape_string($db, $inputs["First name"]);
+            $inputs["Last name"] = mysqli_real_escape_string($db, $inputs["Last name"]);
+            $inputs["Email"] = mysqli_real_escape_string($db, $inputs["Email"]);
+            $inputs["Username"] = mysqli_real_escape_string($db, $inputs["Username"]);
 
             // Ready the SQL statement.
             date_default_timezone_set('America/Chicago');
-
-            $sql = "INSERT INTO users (first_name, last_name, email, username) VALUES ('$first_name','$last_name','$email','$username')";
+            // $sql = "INSERT INTO users (first_name, last_name, email, username) VALUES ('$first_name','$last_name','$email','$username')";
+            $sql = "INSERT INTO users (first_name, last_name, email, username) VALUES ('".$inputs['First name']."','".$inputs['Last name']."','".$inputs['Email']."','".$inputs['Username']."')";
             $query = db_query($db, $sql);
 
             // Validate query was successful.
@@ -82,50 +44,91 @@
             }
             else {
                 // The SQL INSERT statement failed.
-                // Just show the error, not the form
                 echo db_error($db);
                 db_close($db);
                 exit;
             }
         }
-        else {
-            echo display_errors($error_prints);
-        }
     }
-
 ?>
 
 <html lang="en">
-  <head>
-    <link href="../css/register.css" type="text/css" rel="stylesheet">
-  </head>
-  <body>
-    <div id="main-content">
-      <h1>Register</h1>
-      <p>Register to become a Globitek Partner.</p>
-      <br />
-      <form action="./register.php" method="post">
-        First Name:
-        <br />
-        <input type="text" name="first_name" value="<?php echo $first_name; ?>">
-        <br />
-        Last Name:
-        <br />
-        <input type="text" name="last_name" value="<?php echo $last_name; ?>">
-        <br />
-        Email:
-        <br />
-        <input type="text" name="email" value="<?php echo $email; ?>">
-        <br />
-        Username:
-        <br />
-        <input type="text" name="username" value="<?php echo $username; ?>">
-        <br />
-        <br />
-        <input type="submit" name="submit">
-      </form>
-    </div>
-  </body>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.5/css/bootstrap-flex.css"></link>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="../css/register.css" type="text/css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="main-content" class="jumbotron container">
+            <div class="intro">
+                <h1>Register</h1>
+                <p>Register to become a Globitek Partner.</p>
+            </div>
+            <form action="./register.php" method="post">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" name="first_name" class="form-control" value="<?php echo $inputs['First name']; ?>">
+                    <?php if (strcmp($errors["First name"], "") != 0) { ?>
+                            <div id="first_name_error" class="alert alert-danger">
+                                <a href="#" class="close" id="first_name_error_exit" date-dismiss="alert" aria-label="close">&times;</a>
+                                <strong><?php echo $errors["First name"];?></strong>
+                            </div>
+                    <?php } ?>
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" name="last_name" class="form-control" value="<?php echo $inputs['Last name']; ?>">
+                    <?php if (strcmp($errors["Last name"], "") != 0) { ?>
+                            <div id="last_name_error" class="alert alert-danger">
+                                <a href="#" class="close" id="last_name_error_exit" date-dismiss="alert" aria-label="close">&times;</a>                            
+                                <strong><?php echo $errors["Last name"];?></strong>
+                            </div>
+                    <?php } ?>                    
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" class="form-control" value="<?php echo $inputs['Email']; ?>">
+                    <?php if (strcmp($errors["Email"], "") != 0) { ?>
+                            <div id="email_error" class="alert alert-danger">
+                                <a href="#" class="close" id="email_error_exit" date-dismiss="alert" aria-label="close">&times;</a>                            
+                                <strong><?php echo $errors["Email"];?></strong>
+                            </div>
+                    <?php } ?>                    
+                </div>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" value="<?php echo $inputs['Username']; ?>">
+                    <?php if (strcmp($errors["Username"], "") != 0) { ?>
+                            <div id="username_error" class="alert alert-danger">
+                                <a href="#" class="close" id="username_error_exit" date-dismiss="alert" aria-label="close">&times;</a>
+                                <strong><?php echo $errors["Username"];?></strong>
+                            </div>
+                    <?php } ?>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </body>
 </html>
 
 <?php include(SHARED_PATH . '/footer.php'); ?>
+
+<!-- Javascript function to close alert boxes. -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#first_name_error_exit').click(function () {
+            $('#first_name_error').hide('fade');
+        });
+        $('#last_name_error_exit').click(function () {
+            $('#last_name_error').hide('fade');
+        });
+        $('#username_error_exit').click(function () {
+            $('#username_error').hide('fade');
+        });
+        $('#email_error_exit').click(function () {
+            $('#email_error').hide('fade');
+        });
+    });
+</script>
+
