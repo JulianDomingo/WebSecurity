@@ -53,10 +53,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
-
-Getting everything set up
-
-Bonus 2 and using the right methods. It was easy to do, but you had to use the right methods because some are deprecated
+- [X] Building the development environment was troublesome. Any changes to the MySQL server will not reflect in phpMyAdmin unless its MySQL version is the exact same as the MySQL version installed on one's machine.
+- [X] Having a syntactically correct SQL statement to query the database with. Especially since the text input is stored in variables, I had to learn some PHP string concatenation techniques, such as the syntax, nesting the variable inside {}, and making sure I had single quotes covering the variable itself; the documentation was helpful in providing the correct usage.
+- [X] Learning the different kinds of sanitization, specifically the use cases for each function.
 
 ## License
 
