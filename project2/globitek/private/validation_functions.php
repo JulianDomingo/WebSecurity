@@ -1,4 +1,4 @@
-  <?php
+<?php
 
   // is_blank('abcd')
   function is_blank($value='') {
@@ -21,8 +21,9 @@
 
   // has_valid_email_format('test@test.com')
   function has_valid_email_format($value) {
-    // Instructed to validate email by checking if input contained a "@".
-    return strpos($value, "@") !== false and preg_match('/\A[0-9A-Za-z\s_@\.]+\Z/', $value) != 0;
+    // Function can be improved later to check for
+    // more than just '@'.
+    return strpos($value, '@') !== false;
   }
 
 ?>

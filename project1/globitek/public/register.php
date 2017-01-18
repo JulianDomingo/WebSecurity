@@ -34,7 +34,7 @@
             // Ready the SQL statement.
             date_default_timezone_set('America/Chicago');
             // $sql = "INSERT INTO users (first_name, last_name, email, username) VALUES ('$first_name','$last_name','$email','$username')";
-            $sql = "INSERT INTO users (first_name, last_name, email, username) VALUES ('".$inputs['First name']."','".$inputs['Last name']."','".$inputs['Email']."','".$inputs['Username']."')";
+            $sql = "INSERT INTO users (first_name, last_name, email, username, created_at) VALUES ('".$inputs['First name']."','".$inputs['Last name']."','".$inputs['Email']."','".$inputs['Username']."','".date('Y-m-d H:i:s')."')";
             $query = db_query($db, $sql);
 
             // Validate query was successful.
