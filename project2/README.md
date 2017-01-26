@@ -6,31 +6,31 @@ Time spent: **20** hours spent in total
 
 The following **required** functionality is completed:
 
-1\. [X]  Required: Import the Starting Database
+1. Required: Import the Starting Database
 
-2\. [X]  Required: Set Up the Starting Code
+2. Required: Set Up the Starting Code
 
-3\. [X]  Required: Review code for Staff CMS for Users
+3. Required: Review code for Staff CMS for Users
 
-4\. [X]  Required: Complete Staff CMS for Salespeople
+4. Required: Complete Staff CMS for Salespeople
   * [X]  Required: index.php
   * [X]  Required: show.php
   * [X]  Required: new.php
   * [X]  Required: edit.php
 
-5\. [X]  Required: Complete Staff CMS for States
+5. Required: Complete Staff CMS for States
   * [X]  Required: index.php
   * [X]  Required: show.php
   * [X]  Required: new.php
   * [X]  Required: edit.php
 
-6\. [X]  Required: Complete Staff CMS for Territories
+6. Required: Complete Staff CMS for Territories
   * [X]  Required: index.php
   * [X]  Required: show.php
   * [X]  Required: new.php
   * [X]  Required: edit.php
 
-7\. [X]  Required: Add Data Validations
+7. Required: Add Data Validations
   * [X]  Required: Validate that no values are left blank.
   * [X]  Required: Validate that all string values are less than 255 characters.
   * [X]  Required: Validate that usernames contain only the whitelisted characters.
@@ -38,13 +38,13 @@ The following **required** functionality is completed:
   * [X]  Required: Validate that email addresses contain only whitelisted characters.
   * [X]  Required: Add *at least 5* other validations of your choosing.
 
-8\. [X]  Required: Sanitization
+8. Required: Sanitization
   * [X]  Required: All input and dynamic output should be sanitized.
   * [X]  Required: Sanitize dynamic data for URLs
   * [X]  Required: Sanitize dynamic data for HTML
   * [X]  Required: Sanitize dynamic data for SQL
 
-9\. [X]  Required: Penetration Testing
+9. Required: Penetration Testing
   * [X]  Required: Verify form inputs are not vulnerable to SQLI attacks.
   * [X]  Required: Verify query strings are not vulnerable to SQLI attacks.
   * [X]  Required: Verify form inputs are not vulnerable to XSS attacks.
@@ -73,10 +73,10 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-- [X] I spent a lot of time trying to figure out why my show.php and edit.php files weren't working, realizing that I needed to provide the HTTP query string after the page name + "?" in order to display the specific user's page.
-- [X] Ensuring the input and dynamic output is sanitized, validated, and resistant to SQL injections / XSS attacks.
-- [X] I was troubled for a while in determining a way to prevent URL SQL injections. I kept trying to try different techniques directly on the SQL Query statement, but eventually I realized since the user is modifying the URL, I should simply check if the URL query is a numeric value using "is_numeric($_GET[query_parameter])." This would prevent any kind of SQL Injection, as it requires alphabetic letters.
-- [X] The sheer amount of code was somewhat challenging in the sense of managing the dependencies of the other CMS's when changing a certain CMS (i.e. links, query parameters, etc.).
+- I spent a lot of time trying to figure out why my show.php and edit.php files weren't working, realizing that I needed to provide the HTTP query string after the page name + "?" in order to display the specific user's page.
+- Ensuring the input and dynamic output is sanitized, validated, and resistant to SQL injections / XSS attacks.
+- I was troubled for a while in determining a way to prevent URL SQL injections. I kept trying to try different techniques directly on the SQL Query statement, but eventually I realized since the user is modifying the URL, I should simply check if the URL query is a numeric value using "is_numeric($_GET[query_parameter])." This would prevent any kind of SQL Injection, as it requires alphabetic letters.
+- The sheer amount of code was somewhat challenging in the sense of managing the dependencies of the other CMS's when changing a certain CMS (i.e. links, query parameters, etc.).
 
 Describe any challenges encountered while building the app.
 
