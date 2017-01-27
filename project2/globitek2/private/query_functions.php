@@ -75,8 +75,8 @@
     // Use prepared statements to prevent form SQL Injection.
     if ($stmt = mysqli_prepare($db, "INSERT INTO countries (name, code) VALUES(?, ?)")) {
       // "s" represents a string parameter and "i" represents an int parameter.
-      mysqli_stmt_bind_param($stmt, "ss", $country['name'], $country['code']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ss", $country['name'], $country['code']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -97,8 +97,8 @@
     }
 
     if ($stmt = mysqli_prepare($db, "UPDATE countries SET name=?, code=? WHERE id=? LIMIT 1")) {
-      mysqli_stmt_bind_param($stmt, "ssi", $country['name'], $country['code'], $country['id']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssi", $country['name'], $country['code'], $country['id']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -184,8 +184,8 @@
     // Use prepared statements to prevent form SQL Injection.
     if ($stmt = mysqli_prepare($db, "INSERT INTO states (name, code, country_id) VALUES(?, ?, ?)")) {
       // "s" represents a string parameter and "i" represents an int parameter.
-      mysqli_stmt_bind_param($stmt, "ssi", $state['name'], $state['code'], $country_id);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $country_id);
+      $stmt->execute();
       return true;
     }
     else {
@@ -206,8 +206,8 @@
     }
 
     if ($stmt = mysqli_prepare($db, "UPDATE states SET name=?, code=? WHERE id=? LIMIT 1")) {
-      mysqli_stmt_bind_param($stmt, "ssi", $state['name'], $state['code'], $state['id']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $state['id']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -301,8 +301,8 @@
 
     if ($stmt = mysqli_prepare($db, "INSERT INTO territories (name, position, state_id) VALUES (?, ?, ?)")) {
       // "i" represents an integer value.
-      mysqli_stmt_bind_param($stmt, "sii", $territory['name'], $territory['position'], $state_id);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $state_id);
+      $stmt->execute();
       return true;
     } 
     else {
@@ -323,8 +323,8 @@
     }
 
     if ($stmt = mysqli_prepare($db, "UPDATE territories SET name=?, position=? WHERE id=? LIMIT 1")) {
-      mysqli_stmt_bind_param($stmt, "sii", $territory['name'], $territory['position'], $territory['id']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $territory['id']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -440,8 +440,8 @@
 
     if ($stmt = mysqli_prepare($db, "INSERT INTO salespeople (first_name, last_name, phone, email) VALUES (?, ?, ?, ?)")) {
       // "s" represents a string parameter.
-      mysqli_stmt_bind_param($stmt, "ssss", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssss", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -462,8 +462,8 @@
     }
 
     if ($stmt = mysqli_prepare($db, "UPDATE salespeople SET first_name=?, last_name=?, phone=?, email=? WHERE id=? LIMIT 1")) {
-      mysqli_stmt_bind_param($stmt, "ssssi", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email'], $salesperson['id']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssssi", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email'], $salesperson['id']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -530,6 +530,10 @@
     }
     $user['last_name'] = strip_tags($user['last_name']);
 
+    if (!is_unique_user($user, $db)) {
+      $errors[] = "User already exists.";
+    }
+
     if (is_blank($user['email'])) {
       $errors[] = "Email cannot be blank.";
     } elseif (!has_valid_email_format($user['email'])) {
@@ -558,40 +562,14 @@
     if (!empty($errors)) {
       return $errors;
     }
-    elseif (!is_unique_user($user, $db)) {
-      $errors[] = "User already exists.";
-      return $errors;
-    }
 
     if ($stmt = mysqli_prepare($db, "INSERT INTO users (first_name, last_name, email, username, created_at) VALUES (?, ?, ?, ?, ?)")) {
       $created_at = date("Y-m-d H:i:s");
-      mysqli_stmt_bind_param($stmt, "sssss", $user['first_name'], $user['last_name'], $user['email'], $user['username'], $created_at);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("sssss", $user['first_name'], $user['last_name'], $user['email'], $user['username'], $created_at);
+      $stmt->execute();
       return true;
     }
     else {
-      echo db_error($db);
-      db_close($db);
-      exit;
-    }
-
-    $sql = "INSERT INTO users ";
-    $sql .= "(first_name, last_name, email, username, created_at) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . $user['first_name'] . "',";
-    $sql .= "'" . $user['last_name'] . "',";
-    $sql .= "'" . $user['email'] . "',";
-    $sql .= "'" . $user['username'] . "',";
-    $sql .= "'" . $created_at . "'";
-    $sql .= ");";
-    // For INSERT statments, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
-      return true;
-    } else {
-      // The SQL INSERT statement failed.
-      // Just show the error, not the form
-      echo $sql;
       echo db_error($db);
       db_close($db);
       exit;
@@ -605,27 +583,13 @@
 
     $errors = validate_user($user);
     if (!empty($errors)) {
+
       return $errors;
     }
-
-    // Uniqueness excluding the current record.
-    if ($stmt = mysqli_prepare($db, "SELECT * from users WHERE id != ?, username = ?")) {
-      mysqli_stmt_bind_param($stmt, "is", $user['id'], $user['username']);
-      mysqli_stmt_execute($stmt);
-      if (db_num_rows($stmt) > 0) {
-        $errors[] = "Username already exists.";
-        return $errors;
-      }
-    }
-    else {
-      echo db_error($db);
-      db_close($db);
-      exit;
-    }
-
+    // The updated username is unique to the users table. The user can successfully change his username to the value specified.
     if ($stmt = mysqli_prepare($db, "UPDATE users SET first_name=?, last_name=?, email=?, username=? WHERE id=? LIMIT 1")) {
-      mysqli_stmt_bind_param($stmt, "ssssi", $users['first_name'], $users['last_name'], $users['email'], $users['username'], $users['id']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("ssssi", $users['first_name'], $users['last_name'], $users['email'], $users['username'], $users['id']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -639,8 +603,8 @@
     global $db;
 
     if ($stmt = mysqli_prepare($db, "DELETE from users WHERE username=?")) {
-      mysqli_stmt_bind_param($stmt, "s", $user['username']);
-      mysqli_stmt_execute($stmt);
+      $stmt->bind_param("s", $user['username']);
+      $stmt->execute();
       return true;
     }
     else {
@@ -664,27 +628,33 @@
   }
 
   function is_unique_username($user, $db) {
-    $sql = "SELECT * FROM users WHERE ";
-    $sql .= "(username='" . $user['username'] . "');";
-
-    $query = db_query($db, $sql);
-    if (db_num_rows($query) > 0) {
-        return False;
+    if ($stmt = mysqli_prepare($db, "SELECT * FROM users WHERE username=?")) {
+      $stmt->bind_param("s", $user['username']);
+      $stmt->execute();
+      $stmt->store_result();
+      return ($stmt->num_rows > 0) ? False : True;
+      // echo "<h2>" . $stmt->num_rows . "</h2>";
     }
-    return True;
+    else {
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
   }
 
   // Pass errors list by reference to retain error statement.
   function is_unique_user($user, $db) {
-    $sql = "SELECT * FROM users WHERE ";
-    $sql .= "(first_name='" . $user['first_name'] . "' AND ";
-    $sql .= "last_name='" . $user['last_name'] . "')";
-
-    $query = db_query($db, $sql);
-    if (db_num_rows($query) > 0) {
-        return False;
+    if ($stmt = mysqli_prepare($db, "SELECT * FROM users WHERE first_name=? && last_name=? AND id != ?")) {
+      $stmt->bind_param("ssi", $user['first_name'], $user['last_name'], $user['id']);
+      $stmt->execute();
+      $stmt->store_result();
+      return ($stmt->num_rows > 0) ? false : true;
     }
-    return True;
+    else {
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
   }
 
   // Pass errors list by reference to retain error statement.

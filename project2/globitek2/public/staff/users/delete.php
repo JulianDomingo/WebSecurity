@@ -14,7 +14,6 @@ if (is_post_request()) {
 	if($result === true) {
 		redirect_to('index.php');
 	} else {
-		echo "Result failed.";
 		$errors = $result;
 	}
 }
