@@ -68,6 +68,7 @@ The following advanced user stories are optional:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
+Link: http://i.giphy.com/d1E1LGfax3i0VBC0.gif
 
 <img src='http://i.giphy.com/d1E1LGfax3i0VBC0.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
