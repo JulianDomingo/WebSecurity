@@ -1,3 +1,4 @@
+
 <?php
 
   //
@@ -48,19 +49,14 @@
       return $errors;
     }
 
-    $sql = "INSERT INTO countries ";
-    $sql .= "(name, code) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $country['name']) . "',";
-    $sql .= "'" . db_escape($db, $country['code']) . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    // Use prepared statements to prevent form SQL Injection.
+    if ($stmt = mysqli_prepare($db, "INSERT INTO countries (name, code) VALUES(?, ?)")) {
+      // "s" represents a string parameter and "i" represents an int parameter.
+      $stmt->bind_param("ss", $country['name'], $country['code']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL INSERT statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -77,18 +73,12 @@
       return $errors;
     }
 
-    $sql = "UPDATE countries SET ";
-    $sql .= "name='" . db_escape($db, $country['name']) . "', ";
-    $sql .= "code='" . db_escape($db, $country['code']) . "' ";
-    $sql .= "WHERE id='" . db_escape($db, $country['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_country statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE countries SET name=?, code=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssi", $country['name'], $country['code'], $country['id']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL UPDATE statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -157,20 +147,14 @@
       return $errors;
     }
 
-    $sql = "INSERT INTO states ";
-    $sql .= "(name, code, country_id) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $state['name']) . "',";
-    $sql .= "'" . db_escape($db, $state['code']) . "',";
-    $sql .= "'" . db_escape($db, $state['country_id']) . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    // Use prepared statements to prevent form SQL Injection.
+    if ($stmt = mysqli_prepare($db, "INSERT INTO states (name, code, country_id) VALUES(?, ?, ?)")) {
+      // "s" represents a string parameter and "i" represents an int parameter.
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $country_id);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL INSERT statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -187,19 +171,12 @@
       return $errors;
     }
 
-    $sql = "UPDATE states SET ";
-    $sql .= "name='" . db_escape($db, $state['name']) . "', ";
-    $sql .= "code='" . db_escape($db, $state['code']) . "', ";
-    $sql .= "country_id='" . db_escape($db, $state['country_id']) . "' ";
-    $sql .= "WHERE id='" . db_escape($db, $state['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_state statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE states SET name=?, code=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssi", $state['name'], $state['code'], $state['id']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL UPDATE statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -266,20 +243,13 @@
       return $errors;
     }
 
-    $sql = "INSERT INTO territories ";
-    $sql .= "(name, state_id, position) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $territory['name']) . "',";
-    $sql .= "'" . db_escape($db, $territory['state_id']) . "',";
-    $sql .= "'" . db_escape($db, $territory['position']) . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO territories (name, position, state_id) VALUES (?, ?, ?)")) {
+      // "i" represents an integer value.
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $state_id);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL INSERT territoryment failed.
-      // Just show the error, not the form
+    } 
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -296,19 +266,12 @@
       return $errors;
     }
 
-    $sql = "UPDATE territories SET ";
-    $sql .= "name='" . db_escape($db, $territory['name']) . "', ";
-    $sql .= "state_id='" . db_escape($db, $territory['state_id']) . "', ";
-    $sql .= "position='" . db_escape($db, $territory['position']) . "' ";
-    $sql .= "WHERE id='" . db_escape($db, $territory['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_territory statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE territories SET name=?, position=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("sii", $territory['name'], $territory['position'], $territory['id']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL UPDATE territoryment failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -391,21 +354,13 @@
       return $errors;
     }
 
-    $sql = "INSERT INTO salespeople ";
-    $sql .= "(first_name, last_name, phone, email) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $salesperson['first_name']) . "',";
-    $sql .= "'" . db_escape($db, $salesperson['last_name']) . "',";
-    $sql .= "'" . db_escape($db, $salesperson['phone']) . "',";
-    $sql .= "'" . db_escape($db, $salesperson['email']) . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO salespeople (first_name, last_name, phone, email) VALUES (?, ?, ?, ?)")) {
+      // "s" represents a string parameter.
+      $stmt->bind_param("ssss", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL INSERT statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -422,20 +377,12 @@
       return $errors;
     }
 
-    $sql = "UPDATE salespeople SET ";
-    $sql .= "first_name='" . db_escape($db, $salesperson['first_name']) . "', ";
-    $sql .= "last_name='" . db_escape($db, $salesperson['last_name']) . "', ";
-    $sql .= "phone='" . db_escape($db, $salesperson['phone']) . "', ";
-    $sql .= "email='" . db_escape($db, $salesperson['email']) . "' ";
-    $sql .= "WHERE id='" . db_escape($db, $salesperson['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_salesperson statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE salespeople SET first_name=?, last_name=?, phone=?, email=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssssi", $salesperson['first_name'], $salesperson['last_name'], $salesperson['phone'], $salesperson['email'], $salesperson['id']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL UPDATE statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -530,22 +477,13 @@
     }
 
     $created_at = date("Y-m-d H:i:s");
-    $sql = "INSERT INTO users ";
-    $sql .= "(first_name, last_name, email, username, created_at) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $user['first_name']) . "',";
-    $sql .= "'" . db_escape($db, $user['last_name']) . "',";
-    $sql .= "'" . db_escape($db, $user['email']) . "',";
-    $sql .= "'" . db_escape($db, $user['username']) . "',";
-    $sql .= "'" . $created_at . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "INSERT INTO users (first_name, last_name, email, username, created_at) VALUES (?, ?, ?, ?, ?)")) {
+      $created_at = date("Y-m-d H:i:s");
+      $stmt->bind_param("sssss", $user['first_name'], $user['last_name'], $user['email'], $user['username'], $created_at);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL INSERT statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -562,20 +500,12 @@
       return $errors;
     }
 
-    $sql = "UPDATE users SET ";
-    $sql .= "first_name='" . db_escape($db, $user['first_name']) . "', ";
-    $sql .= "last_name='" . db_escape($db, $user['last_name']) . "', ";
-    $sql .= "email='" . db_escape($db, $user['email']) . "', ";
-    $sql .= "username='" . db_escape($db, $user['username']) . "' ";
-    $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_user statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "UPDATE users SET first_name=?, last_name=?, email=?, username=? WHERE id=? LIMIT 1")) {
+      $stmt->bind_param("ssssi", $users['first_name'], $users['last_name'], $users['email'], $users['username'], $users['id']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL UPDATE statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
@@ -587,16 +517,12 @@
   function delete_user($user) {
     global $db;
 
-    $sql = "DELETE FROM users ";
-    $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
-    $sql .= "LIMIT 1;";
-    // For update_user statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    if ($stmt = mysqli_prepare($db, "DELETE from users WHERE username=?")) {
+      $stmt->bind_param("s", $user['username']);
+      $stmt->execute();
       return true;
-    } else {
-      // The SQL DELETE statement failed.
-      // Just show the error, not the form
+    }
+    else {
       echo db_error($db);
       db_close($db);
       exit;
