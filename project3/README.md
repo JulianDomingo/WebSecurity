@@ -25,8 +25,8 @@ The following **required** functionality is completed:
   * [X]  Required: Add a login requirement to *almost all* staff area pages (the index.php files which simply redirect to another index.php don't require a login. Additionally, the login and logout pages themselves obviously don't need requirelogin() to be called.
   * [X]  Required: Write code for `last_login_is_recent()`.
 
-5\. [ ]  Required: Complete Logout page.
-  * [ ]  Required: Add code to destroy the user's session file after logging out.
+5\. [X]  Required: Complete Logout page.
+  * [X]  Required: Add code to destroy the user's session file after logging out.
 
 6\. [ ]  Required: Add CSRF protections to the state forms.
   * [ ]  Required: Create a CSRF token.
