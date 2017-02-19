@@ -11,11 +11,6 @@
 	return true;
   }
 
-  // CHecks if the session is new.
-  function is_new_session() {
-    return (!isset($_SESSION['user_id']));
-  }
-
   // A one-step function to destroy the current session
   function destroy_current_session() {
 	// Use both unset and destroy for compatibility with all browsers and versions of PHP
@@ -70,8 +65,6 @@
   // Call require_login() at the top of any page which needs to
   // require a valid login before granting acccess to the page.
   function require_login() {
-    if (!isset($_SESSION['user_id'])) { echo "User ID not set."; }
-    if (!isset($_SESSION['user_id'])) { echo "Capitailzation matters."; }
     if(!is_logged_in()) {
       destroy_current_session();
       redirect_to(url_for('/staff/login.php'));

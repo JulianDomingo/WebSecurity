@@ -47,10 +47,10 @@ The following **required** functionality is completed:
   * [X]  Required: Ensure the application is not vulnerable to XSS attacks.
 
 8\. SQLI Protection
-  * [ ]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
+  * [X]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
 
 9\. Final Penetration Testing
-  * [ ] Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
+  * [X] Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
 
 
 The following advanced user stories are optional:
