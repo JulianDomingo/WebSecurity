@@ -3,7 +3,8 @@
   // Will perform all actions necessary to log in the user
   // Also protects user from session fixation.
   function log_in_user($user) {
-    	if (session_is_valid()) {
+	return true;
+	if (session_is_valid()) {
 		$_SESSION['user_id'] = session_id(); 
 	}
 	else {		
