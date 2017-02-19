@@ -25,7 +25,7 @@ The following **required** functionality is completed:
 
 4\. Login Requirements 
   * [X]  Required: Required login to access staff area pages.
-  * [X]  Required: Add a login requirement to *almost all* staff area pages (the index.php files which simply redirect to another index.php don't require a login. Additionally, the login and logout pages themselves obviously don't need requirelogin() to be called.
+  * [X]  Required: Add a login requirement to *almost all* staff area pages (the index.php files which simply redirect to another index.php don't require a login. 
   * [X]  Required: Write code for `last_login_is_recent()`.
 
 5\. Completion of logout processes
@@ -55,9 +55,10 @@ The following **required** functionality is completed:
 
 The following advanced user stories are optional:
 
-* [ ]  Bonus Objective 1: Identify security flaw in Objective #4 (requiring login on staff pages)
-  * [ ]  Identify the security principal not being followed.
-  * [ ]  Write a short description of how the code could be modified to be more secure.
+* Bonus Objective 1: Identify security flaw in Objective #4 (requiring login on staff pages)
+  * [X]  Identify the security principal not being followed: Defense in Depth
+  * [X]  Write a short description of how the code could be modified to be more secure:
+	 The objective states to add login requirements to "almost all" staff area pages, since there are some that don't require a login. However, it doesn't hurt the user to implement additional, redundant layers of security if it means decreasing the chances of a malicious attack. In my previous answer to objective #4, I stated that the redirected index.php files don't require a login. However, what if the attacker were to enter the redirected index.php directly? Since the URL is in full exposure (at least for this project), it won't take much effort to find the index.php files that don't have the require_login() method appended. Without the required login, the attacker could change the redirect_to() method to link to the attacker's malicious site through CSRF, and ultimately gain access to private information. To strengthen the security of the code, simply append the require_login() method to *all* staff pages.
 
 * [ ] Bonus Objective 2: Add CSRF protections to all forms in the staff directory
 
