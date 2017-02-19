@@ -39,12 +39,13 @@ if(is_post_request()) {
         redirect_to('index.php');
       } else {
         // Username found, but password does not match.
-        $errors[] = ""; // TODO write an error message
+        $errors[] = "Sorry, we couldn't find that combination of username and password."; 
       }
     } else {
       // No username found
-      $errors[] = ""; // TODO write an error message
+      $errors[] = "Sorry, we couldn't find that combination of username and password."; 
     }
+    // Adhere to security through obscurity - the user doesn't need to know if either the username or the password are correct, but not the other.
   }
 }
 
