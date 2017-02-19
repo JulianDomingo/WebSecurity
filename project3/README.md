@@ -21,8 +21,8 @@ The following **required** functionality is completed:
   * [X]  Required: After login, store user last login time in session data.
   * [X]  Required: Regenerate the session ID at the appropriate point.
 
-4\. [ ]  Required: Require login to access staff area pages.
-  * [ ]  Required: Add a login requirement to *almost all* staff area pages.
+4\. [X]  Required: Require login to access staff area pages.
+  * [X]  Required: Add a login requirement to *almost all* staff area pages (the index.php files which simply redirect to another index.php don't require a login. Additionally, the login and logout pages themselves obviously don't need requirelogin() to be called.
   * [X]  Required: Write code for `last_login_is_recent()`.
 
 5\. [ ]  Required: Complete Logout page.
