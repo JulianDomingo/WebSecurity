@@ -1,6 +1,5 @@
 <?php
 require_once('../../private/initialize.php');
-
 // Until we learn about encryption, we will use an unencrypted
 // master password as a stand-in. It should go without saying
 // that this should *never* be done in real production code.
@@ -35,8 +34,8 @@ if(is_post_request()) {
       if($password === $master_password) {
         // Username found, password matches
         log_in_user($user);
-        // Redirect to the staff menu after login
-        redirect_to('index.php');
+        // Redirect to the staff menu after login	
+	redirect_to('index.php');
       } else {
         // Username found, but password does not match.
         $errors[] = "Sorry, we couldn't find that combination of username and password."; 

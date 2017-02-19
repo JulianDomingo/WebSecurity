@@ -1,20 +1,19 @@
 <?php
-
   // Will perform all actions necessary to log in the user
   // Also protects user from session fixation.
   function log_in_user($user) {
-	return true;
-	if (session_is_valid()) {
-		$_SESSION['user_id'] = session_id(); 
-	}
-	else {		
+	$_SESSION['user_id'] = session_id(); 
+	if (!session_is_valid()) {
 		regenerate_session_id();
-	}	
-
+	}
 	$_SESSION['last_login'] = time();
-	$_SESSION['logged_in'] = true;
 	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 	return true;
+  }
+
+  // CHecks if the session is new.
+  function is_new_session() {
+    return (!isset($_SESSION['user_id']));
   }
 
   // A one-step function to destroy the current session
@@ -42,9 +41,9 @@
   // Checks to see if the user-agent string of the current request
   // matches the user-agent string used when the user last logged in.
   function user_agent_matches_session() {
-    	if(!isset($_SESSION['user_agent'])) { return false; }
-	if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
-	return ($_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
+    if(!isset($_SESSION['user_agent'])) { return false; }
+  	if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
+  	return ($_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
   }
 
   // Inspects the session to see if it should be considered valid.
@@ -71,10 +70,12 @@
   // Call require_login() at the top of any page which needs to
   // require a valid login before granting acccess to the page.
   function require_login() {
+    if (!isset($_SESSION['user_id'])) { echo "User ID not set."; }
+    if (!isset($_SESSION['user_id'])) { echo "Capitailzation matters."; }
     if(!is_logged_in()) {
       destroy_current_session();
       redirect_to(url_for('/staff/login.php'));
-    }
+    } 
   }
 
 ?>
