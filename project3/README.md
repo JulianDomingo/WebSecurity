@@ -7,28 +7,31 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-1\. [X]  Required: Test for initial vulnerabilities
+1\. Initial Penetration Testing
+  * [X] Required: Tested for initial vulnerabilities
 
-2\. [X]  Required: Configure sessions
+2\. Session Configurations
   * [X]  Required: Only allow session IDs to come from cookies
   * [X]  Required: Expire after one day
   * [X]  Required: Use cookies which are marked as HttpOnly
 
-3\. [X]  Required: Complete Login page.
+3\. Login Error Checking & Session Updating
+  * [X]  Required: Completed login page.
   * [X]  Required: Show an error message when username is not found.
   * [X]  Required: Show an error message when username is found but password does not match.
   * [X]  Required: After login, store user ID in session data.
   * [X]  Required: After login, store user last login time in session data.
   * [X]  Required: Regenerate the session ID at the appropriate point.
 
-4\. [X]  Required: Require login to access staff area pages.
+4\. Login Requirements 
+  * [X]  Required: Required login to access staff area pages.
   * [X]  Required: Add a login requirement to *almost all* staff area pages (the index.php files which simply redirect to another index.php don't require a login. Additionally, the login and logout pages themselves obviously don't need requirelogin() to be called.
   * [X]  Required: Write code for `last_login_is_recent()`.
 
-5\. [X]  Required: Complete Logout page.
+5\. Completion of logout processes
   * [X]  Required: Add code to destroy the user's session file after logging out.
 
-6\. [ ]  Required: Add CSRF protections to the state forms.
+6\. CSRF Protective Measures
   * [ ]  Required: Create a CSRF token.
   * [ ]  Required: Add CSRF tokens to forms.
   * [ ]  Required: Compare tokens against the stored version of the token.
@@ -40,11 +43,14 @@ The following **required** functionality is completed:
   * [ ]  Required: If tokens do not match, show an error message.
   * [ ]  Required: Make sure that a logged-in user can use pages as expected.
 
-7\. [ ]  Required: Ensure the application is not vulnerable to XSS attacks.
+7\. XSS Protection
+  * [ ]  Required: Ensure the application is not vulnerable to XSS attacks.
 
-8\. [ ]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
+8\. SQLI Protection
+  * [ ]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
 
-9\. [ ]  Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
+9\. Final Penetration Testing
+  * [ ] Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
 
 
 The following advanced user stories are optional:
