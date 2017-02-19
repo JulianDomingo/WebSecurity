@@ -5,11 +5,13 @@
 ob_start();
 
 // Enable sessions with config to prevent session hijacking / XSS.
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
 $lifetime = 86400;
-session_start();
-setcookie(session_name(), session_id(), time() + $lifetime);
+session_start([
+	'use_only_cookies' => 1,
+	'cookie_lifetime' => $lifetime,
+	'cookie_secure' => 1,
+	'cookie_httponly' => 1
+]);
 
 // Turns off any browser built-in XSS protections
 // LEAVE THIS LINE IN WHILE YOU ARE LEARNING

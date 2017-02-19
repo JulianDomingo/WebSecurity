@@ -18,6 +18,8 @@
 
   // A one-step function to destroy the current session
   function destroy_current_session() {
+	// Use both unset and destroy for compatibility with all browsers and versions of PHP
+	session_unset();
   	session_destroy();
   }
 
