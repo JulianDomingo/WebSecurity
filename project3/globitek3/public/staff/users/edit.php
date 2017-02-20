@@ -12,7 +12,7 @@ $user = db_fetch_assoc($users_result);
 // Set default values for all variables the page needs.
 $errors = array();
 
-if(is_post_request()) {
+if(is_post_request() && csrf_token_is_valid()) {
 
   // Confirm that values are present before accessing them.
   if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
@@ -28,6 +28,10 @@ if(is_post_request()) {
     $errors = $result;
   }
 }
+else {
+  $errors[] = "Invalid request.";
+}
+
 ?>
 <?php $page_title = 'Staff: Edit User ' . $user['first_name'] . " " . $user['last_name']; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -50,6 +54,7 @@ if(is_post_request()) {
     <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
     <br />
     <input type="submit" name="submit" value="Update"  />
+    <?php echo csrf_token_tag(); ?>
   </form>
 
 </div>

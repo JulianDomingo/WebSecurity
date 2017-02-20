@@ -15,17 +15,21 @@ $territory = array(
 );
 
 if(is_post_request()) {
+  if (csrf_token_is_valid()) {
+    // Confirm that values are present before accessing them.
+    if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
+    if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
 
-  // Confirm that values are present before accessing them.
-  if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
-  if(isset($_POST['position'])) { $territory['position'] = $_POST['position']; }
-
-  $result = insert_territory($territory);
-  if($result === true) {
-    $new_id = db_insert_id($db);
-    redirect_to('show.php?id=' . $new_id);
-  } else {
-    $errors = $result;
+    $result = insert_territory($territory);
+    if($result === true) {
+      $new_id = db_insert_id($db);
+      redirect_to('show.php?id=' . $new_id);
+    } else {
+      $errors = $result;
+    }
+  }
+  else {
+    $errors[] = "Invalid request.";
   }
 }
 ?>
@@ -46,6 +50,7 @@ if(is_post_request()) {
     <input type="text" name="position" value="<?php echo h($territory['position']); ?>" /><br />
     <br />
     <input type="submit" name="submit" value="Create"  />
+    <?php echo csrf_token_tag(); ?>
   </form>
 
 </div>

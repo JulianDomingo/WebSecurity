@@ -12,7 +12,7 @@ $user = array(
   'email' => ''
 );
 
-if(is_post_request()) {
+if(is_post_request() && csrf_token_is_valid()) {
 
   // Confirm that values are present before accessing them.
   if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
@@ -28,6 +28,10 @@ if(is_post_request()) {
     $errors = $result;
   }
 }
+else {
+  $errors[] = "Invalid request.";
+}
+
 ?>
 <?php $page_title = 'Staff: New User'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
@@ -50,6 +54,7 @@ if(is_post_request()) {
     <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
     <br />
     <input type="submit" name="submit" value="Create"  />
+    <?php echo csrf_token_tag(); ?>
   </form>
 
 </div>

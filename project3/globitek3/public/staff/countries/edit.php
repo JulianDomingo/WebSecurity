@@ -13,16 +13,20 @@ $country = db_fetch_assoc($countries_result);
 $errors = array();
 
 if(is_post_request()) {
+  if (csrf_token_is_valid()) {
+    // Confirm that values are present before accessing them.
+    if(isset($_POST['name'])) { $country['name'] = $_POST['name']; }
+    if(isset($_POST['code'])) { $country['code'] = $_POST['code']; }
 
-  // Confirm that values are present before accessing them.
-  if(isset($_POST['name'])) { $country['name'] = $_POST['name']; }
-  if(isset($_POST['code'])) { $country['code'] = $_POST['code']; }
-
-  $result = update_country($country);
-  if($result === true) {
-    redirect_to('show.php?id=' . $country['id']);
-  } else {
-    $errors = $result;
+    $result = update_country($country);
+    if($result === true) {
+      redirect_to('show.php?id=' . $country['id']);
+    } else {
+      $errors = $result;
+    }
+  }
+  else {
+    $errors[] = "Invalid request.";
   }
 }
 ?>
@@ -43,6 +47,7 @@ if(is_post_request()) {
     <input type="text" name="code" value="<?php echo h($country['code']); ?>" /><br />
     <br />
     <input type="submit" name="submit" value="Update"  />
+    <?php echo csrf_token_tag(); ?>
   </form>
 
 </div>
