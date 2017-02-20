@@ -29,7 +29,7 @@
   // Determines if the form token should be considered "recent"
   // by comparing it to the time a token was last generated.
   function csrf_token_is_recent() {
-    $recent_time = 60 * 5; // Token gets a 5 minute lifetime.
+    $recent_time = 60 * 10; // Token gets a 10  minute lifetime.
     if (!isset($_SESSION['csrf_token_time'])) { return false; }
     return (($_SESSION['csrf_token_time'] + $recent_time) >= time());
   }

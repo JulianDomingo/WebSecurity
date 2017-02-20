@@ -12,24 +12,25 @@ $user = db_fetch_assoc($users_result);
 // Set default values for all variables the page needs.
 $errors = array();
 
-if(is_post_request() && csrf_token_is_valid()) {
+if(is_post_request()) {
+  if (csrf_token_is_valid()) {
+    // Confirm that values are present before accessing them.
+    if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
+    if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
+    if(isset($_POST['username'])) { $user['username'] = $_POST['username']; }
+    if(isset($_POST['email'])) { $user['email'] = $_POST['email']; }
 
-  // Confirm that values are present before accessing them.
-  if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
-  if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
-  if(isset($_POST['username'])) { $user['username'] = $_POST['username']; }
-  if(isset($_POST['email'])) { $user['email'] = $_POST['email']; }
 
-
-  $result = update_user($user);
-  if($result === true) {
-    redirect_to('show.php?id=' . $user['id']);
-  } else {
-    $errors = $result;
+    $result = update_user($user);
+    if($result === true) {
+      redirect_to('show.php?id=' . $user['id']);
+    } else {
+      $errors = $result;
+    }
   }
-}
-else {
-  $errors[] = "Invalid request.";
+  else {
+    $errors[] = "Invalid request.";
+  }
 }
 
 ?>

@@ -32,9 +32,6 @@ if(is_post_request()) {
     $errors[] = "Invalid request.";
   }
 }
-else {
-  $errors[] = "Invalid request.";
-}
 
 ?>
 <?php $page_title = 'Staff: New User'; ?>

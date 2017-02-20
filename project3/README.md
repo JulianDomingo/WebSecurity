@@ -60,9 +60,9 @@ The following advanced user stories are optional:
   * [X]  Write a short description of how the code could be modified to be more secure:
 	 The objective states to add login requirements to "almost all" staff area pages, since there are some that don't require a login. However, it doesn't hurt the user to implement additional, redundant layers of security if it means decreasing the chances of a malicious attack. In my previous answer to objective #4, I stated that the redirected index.php files don't require a login. However, what if the attacker were to enter the redirected index.php directly? Since the URL is in full exposure (at least for this project), it won't take much effort to find the index.php files that don't have the require_login() method appended. Without the required login, the attacker could change the redirect_to() method to link to the attacker's malicious site through CSRF, and ultimately gain access to private information. To strengthen the security of the code, simply append the require_login() method to *all* staff pages.
 
-* [ ] Bonus Objective 2: Add CSRF protections to all forms in the staff directory
+* [X] Bonus Objective 2: Add CSRF protections to all forms in the staff directory
 
-* [ ]  Bonus Objective 3: CSRF tokens only valid for 10 minutes.
+* [X]  Bonus Objective 3: CSRF tokens only valid for 10 minutes.
 
 * [ ]  Bonus Objective 4: Sessions are valid only if user-agent string matches previous value.
 
