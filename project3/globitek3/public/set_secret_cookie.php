@@ -18,6 +18,8 @@
 	$value_message = $value_init_vector . $value_encrypted;
 
 	$unencrypted_message = base64_encode($value_message);
+	echo "The encrypted key is: " . $value_message;
+	echo "<br/>";
 	echo "The unencrypted key is: " .  $unencrypted_message;
 	// signing checksum
 	//$value_message = sign_string($value_message);

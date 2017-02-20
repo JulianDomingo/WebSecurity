@@ -10,9 +10,12 @@
                 $key = str_pad($key, 32, '*');
 
 		//$secret = get_encrypted_message($secret);
+		echo "The encrypted key is: " . $secret;
+		echo "<br/>";
 		$unencrypted_key = base64_encode($secret);	
 		echo "The unencrypted key is: " . $unencrypted_key;
 		$init_vector_with_ciphertext = base64_decode($unencrypted_key);
+
                 // Separate encrypted message and init vector
                 $init_vector_length = openssl_cipher_iv_length(CIPHER_METHOD);
                 $init_vector = substr($init_vector_with_ciphertext, 0, $init_vector_length);
