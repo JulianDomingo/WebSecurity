@@ -24,5 +24,12 @@
 	echo base64_encode($key_message);
 	echo base64_encode($value_message);
 
-	setcookie($key_message, $value_message);
+	// signing checksum
+	$random_key_string = 'aS9v8wgSlckss';
+	$key_message = $key_message . '--' . hash('sha1', $key_message . $random_key_string);
+	
+	$random_value_string = 'qw8ghsEFoudEE8';
+	$value_message = $value_message . '--' . hash('sha1', $value_message . $random_value_string);
+	
+	setcookie($key_message, $value_message);	
 ?>
