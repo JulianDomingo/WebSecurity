@@ -5,7 +5,7 @@
 	regenerate_session_id();
 	$_session['user_id'] = session_id();
 	$_session['last_login'] = time();
-	$_session['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+	$_session['user_agent'] = $_server['HTTP_USER_AGENT'];
 	return true;
   }
 
@@ -35,8 +35,8 @@
   // matches the user-agent string used when the user last logged in.
   function user_agent_matches_session() {
     if(!isset($_session['user_agent'])) { return false; }
-    if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
-    return ($_session['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
+    if(!isset($_server['HTTP_USER_AGENT'])) { return false; }
+    return ($_session['user_agent'] === $_server['HTTP_USER_AGENT']);
   }
 
   // Inspects the session to see if it should be considered valid.
