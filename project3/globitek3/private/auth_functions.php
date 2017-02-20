@@ -2,11 +2,10 @@
   // Will perform all actions necessary to log in the user
   // Also protects user from session fixation.
   function log_in_user($user) {
-	// regenerate_session_id();
-	$_SESSION['user_id'] = session_id();
-
-	$_SESSION['last_login'] = time();
-	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+	regenerate_session_id();
+	$_session['user_id'] = session_id();
+	$_session['last_login'] = time();
+	$_session['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 	return true;
   }
 
@@ -19,7 +18,7 @@
 
   // Performs all actions necessary to log out a user
   function log_out_user() {
-	unset($_SESSION['user_id']);
+	unset($_session['user_id']);
 	destroy_current_session();
 	return true;
   }
@@ -28,16 +27,16 @@
   // request by comparing it to the user's last login time.
   function last_login_is_recent() {
 	$recent_limit = 60 * 60 * 24 * 1; // 1 day
-	if (!isset($_SESSION['last_login'])) { return false; }
-	return (($_SESSION['last_login'] + $recent_limit) >= time());
+	if (!isset($_session['last_login'])) { return false; }
+	return (($_session['last_login'] + $recent_limit) >= time());
   }
 
   // Checks to see if the user-agent string of the current request
   // matches the user-agent string used when the user last logged in.
   function user_agent_matches_session() {
-    if(!isset($_SESSION['user_agent'])) { return false; }
+    if(!isset($_session['user_agent'])) { return false; }
     if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
-    return ($_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
+    return ($_session['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
   }
 
   // Inspects the session to see if it should be considered valid.
@@ -56,7 +55,7 @@
     // Having a user_id in the session serves a dual-purpose:
     // - Its presence indicates the user is logged in.
     // - Its value tells which user for looking up their record.
-    if(!isset($_SESSION['user_id'])) { return false; }
+    if(!isset($_session['user_id'])) { return false; }
     // if(!session_is_valid()) { return false; }
     return true;
   }
