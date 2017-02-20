@@ -2,7 +2,7 @@
   // Will perform all actions necessary to log in the user
   // Also protects user from session fixation.
   function log_in_user($user) {
-	// regenerate_session_id();
+	session_regenerate_id();
 	$_SESSION['user_id'] = session_id();
 
 	$_SESSION['last_login'] = time();

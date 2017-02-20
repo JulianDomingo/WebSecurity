@@ -12,20 +12,24 @@ $user = array(
   'email' => ''
 );
 
-if(is_post_request() && csrf_token_is_valid()) {
+if(is_post_request()) {
+  if (csrf_token_is_valid()) {
+    // Confirm that values are present before accessing them.
+    if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
+    if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
+    if(isset($_POST['username'])) { $user['username'] = $_POST['username']; }
+    if(isset($_POST['email'])) { $user['email'] = $_POST['email']; }
 
-  // Confirm that values are present before accessing them.
-  if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
-  if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
-  if(isset($_POST['username'])) { $user['username'] = $_POST['username']; }
-  if(isset($_POST['email'])) { $user['email'] = $_POST['email']; }
-
-  $result = insert_user($user);
-  if($result === true) {
-    $new_id = db_insert_id($db);
-    redirect_to('show.php?id=' . $new_id);
-  } else {
-    $errors = $result;
+    $result = insert_user($user);
+    if($result === true) {
+      $new_id = db_insert_id($db);
+      redirect_to('show.php?id=' . $new_id);
+    } else {
+      $errors = $result;
+    }
+  }
+  else {
+    $errors[] = "Invalid request.";
   }
 }
 else {
