@@ -2,10 +2,9 @@
   // Will perform all actions necessary to log in the user
   // Also protects user from session fixation.
   function log_in_user($user) {
-	$_SESSION['user_id'] = session_id(); 
-	if (!session_is_valid()) {
-		regenerate_session_id();
-	}
+	// regenerate_session_id();
+	$_SESSION['user_id'] = session_id();
+
 	$_SESSION['last_login'] = time();
 	$_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 	return true;
@@ -37,8 +36,8 @@
   // matches the user-agent string used when the user last logged in.
   function user_agent_matches_session() {
     if(!isset($_SESSION['user_agent'])) { return false; }
-  	if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
-  	return ($_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
+    if(!isset($_SERVER['HTTP_USER_AGENT'])) { return false; }
+    return ($_SESSION['user_agent'] === $_SERVER['HTTP_USER_AGENT']);
   }
 
   // Inspects the session to see if it should be considered valid.
@@ -58,7 +57,7 @@
     // - Its presence indicates the user is logged in.
     // - Its value tells which user for looking up their record.
     if(!isset($_SESSION['user_id'])) { return false; }
-    if(!session_is_valid()) { return false; }
+    // if(!session_is_valid()) { return false; }
     return true;
   }
 
@@ -70,5 +69,4 @@
       redirect_to(url_for('/staff/login.php'));
     } 
   }
-
 ?>
