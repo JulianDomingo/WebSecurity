@@ -1,7 +1,7 @@
 
 # Project 4 - Globitek Authentication and Login Throttling
 
-Time spent: **X** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -66,12 +66,12 @@ The following advanced user stories are optional:
 
 * [X]  Bonus Objective 4: Sessions are valid only if user-agent string matches previous value.
 
-* [ ]  Advanced Objective: Set/Get Signed-Encrypted Cookie
-  * [ ]  Create "public/set\_secret\_cookie.php".
-  * [ ]  Create "public/get\_secret\_cookie.php".
-  * [ ]  Encrypt and sign cookie before storing.
-  * [ ]  Verify cookie is signed correctly or show error message.
-  * [ ]  Decrypt cookie.
+* Advanced Objective: Set/Get Signed-Encrypted Cookie
+  * [X]  Create "public/set\_secret\_cookie.php".
+  * [X]  Create "public/get\_secret\_cookie.php".
+  * [X]  Encrypt and sign cookie before storing.
+  * [X]  Verify cookie is signed correctly or show error message.
+  * [X]  Decrypt cookie.
 
 ## Video Walkthrough
 

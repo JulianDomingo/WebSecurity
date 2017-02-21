@@ -17,7 +17,7 @@
     return ($new_checksum === $array[1]);
   }
 
-  function get_encrypted_message($signed_message) {
+  function remove_checksum($signed_message) {
     $array = explode('--', $signed_message);
     return $array[0];
   }
