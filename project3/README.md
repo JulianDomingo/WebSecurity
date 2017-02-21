@@ -83,11 +83,13 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
-
+Challenges faced:
+* [X] For the advanced objective, figuring out what part of the cookie to encrypt/decrypt/sign. Initially I didn't know if I was to do this for the actual $_COOKIE variable, the key, the value, or both. However, reading the learning modules related to the assignment resolved my misunderstandings. 
+* [X] Pinpointing the SQLI in the existing starter code. While I sanitized the output, I forgot to consider that the input should also be sanitized. A simple revision to the find_usernames\_by\_id() method resolved the issue. 
+* [X] General syntax issues. This is the first lab I completed through Vagrant (got a new laptop) and since PHPMyAdmin isn't installed it doesn't throw any errors if something is awry in my code. In the future assignments I'll make sure to install PHPMyAdmin on my VM. 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Julian Domingo]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
