@@ -27,7 +27,8 @@
   // Determines if the request should be considered a "recent"
   // request by comparing it to the user's last login time.
   function last_login_is_recent() {
-	$recent_limit = 60 * 60 * 24 * 1; // 1 day
+	//$recent_limit = 60 * 60 * 24 * 1; // 1 day
+	$recent_limit = 10;
 	if (!isset($_SESSION['last_login'])) { return false; }
 	return (($_SESSION['last_login'] + $recent_limit) >= time());
   }

@@ -7,7 +7,7 @@ ob_start();
 // Enable sessions with config to prevent session hijacking / XSS.
 session_start([
 	'use_only_cookies' => 1,
-	'cookie_lifetime' => 86400, 
+	'cookie_lifetime' => 10, 
 	'cookie_httponly' => true
 ]);
 
