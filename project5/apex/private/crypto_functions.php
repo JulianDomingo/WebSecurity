@@ -2,15 +2,38 @@
 
 // Symmetric Encryption
 
-// Cipher method to use for symmetric encryption
 const CIPHER_METHOD = 'AES-256-CBC';
 
 function key_encrypt($string, $key, $cipher_method=CIPHER_METHOD) {
-  return "D4RK SH4D0W RUL3Z";
+  $key = pad_key_to_256_bits($key);
+  $iv = create_AES_initialization_vector();
+  $encrypted = openssl_encrypt($string, CIPHER_METHOD, $key, OPENSSL_RAW_DATA, $iv);
+  $message = $iv . $encrypted;
+  return base64_encode($message);
+}
+
+function pad_key_to_256_bits($key) {
+  return str_pad($key, 32, '*');
+}
+
+function create_AES_initialization_vector() {
+  $iv_length = openssl_cipher_iv_length(CIPHER_METHOD);
+  $iv = openssl_random_pseudo_bytes($iv_length);
+  return $iv;
 }
 
 function key_decrypt($string, $key, $cipher_method=CIPHER_METHOD) {
-  return "PWNED YOU!";
+  $key = pad_key_to_256_bits($key);
+  $iv_with_ciphertext = base64_decode($string);
+
+  // Separate initialization vector and encrypted string
+  $iv_length = openssl_cipher_iv_length(CIPHER_METHOD);
+  $iv = substr($iv_with_ciphertext, 0, $iv_length);
+  $ciphertext = substr($iv_with_ciphertext, $iv_length);
+
+  // Decrypt
+  $plaintext = openssl_decrypt($ciphertext, CIPHER_METHOD, $key, OPENSSL_RAW_DATA, $iv);
+  return $plaintext;
 }
 
 
@@ -38,17 +61,3 @@ function pkey_decrypt($string, $private_key) {
   return 'Alc evi csy pssomrk livi alir csy wlsyph fi wezmrk ETIB?';
 }
 
-
-// Digital signatures using public/private keys
-
-function create_signature($data, $private_key) {
-  // A-Za-z : ykMwnXKRVqheCFaxsSNDEOfzgTpYroJBmdIPitGbQUAcZuLjvlWH
-  return 'RpjJ WQL BImLcJo QLu dQv vJ oIo Iu WJu?';
-}
-
-function verify_signature($data, $signature, $public_key) {
-  // Vigenère
-  return 'RK, pym oays onicvr. Iuw bkzhvbw uedf pke conll rt ZV nzxbhz.';
-}
-
-?>
