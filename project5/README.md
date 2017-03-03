@@ -15,15 +15,15 @@ The following **required** functionality is completed:
     Response: 2gZV7w5BcfoB5kLxG6nFibmzd8N5U/VHY+FHUe/oj+kes+gU3j/ywn170EsKFpyVTWK/QZp40nI8/O2vKFhvPw==
     (Apex HQ received the message late last night, a Wednesday.)
 
-3\. Generate Public-Private Keys
-  * [ ]  Required: Repair the key generator code
-  * [ ]  Required: Generate keys for "johnsteed" and add him to the Agent Directory
+3. Generate Public-Private Keys
+  * [X]  Required: Repair the key generator code
+  * [X]  Required: Generate keys for "johnsteed" and add him to the Agent Directory
 
-4\. Asymmetric Encrypt/Decrypt
-  * [ ]  Required: Repair the asymmetric encrypt and decrypt code
+4. Asymmetric Encrypt/Decrypt
+  * [X]  Required: Repair the asymmetric encrypt and decrypt code
 
-5\. Create/Verify Signature
-  * [ ]  Required: Repair the create and verify signature code
+5. Create/Verify Signature
+  * [X]  Required: Repair the create and verify signature code
   
 6\. Encrypted Message 2
   * [ ]  Required: Decrypt the message
