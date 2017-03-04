@@ -8,8 +8,7 @@
       redirect_to('index.php');
     }
 
-    $agent99_result = find_agent_by_id(1);
-    $sender = db_fetch_assoc($agent99_result);
+    $sender = login(); 
 
     $recipient_result = find_agent_by_id($_GET['id']);
     $recipient = db_fetch_assoc($recipient_result);

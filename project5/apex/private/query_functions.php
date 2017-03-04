@@ -24,7 +24,7 @@
   function find_agent_by_id($id=0) {
     global $db;
     $sql = "SELECT * FROM agents ";
-    $sql .= "WHERE id='" . $id . "';";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "';";
     $result = db_query($db, $sql);
     return $result;
   }
@@ -59,16 +59,14 @@
 
     $sql = "INSERT INTO agents ";
     $sql .= "(codename, public_key, private_key) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $agent['codename']) . "',";
-    $sql .= "'" . db_escape($db, $agent['public_key']) . "',";
-    $sql .= "'" . db_escape($db, $agent['private_key']) . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    $sql .= "VALUES (?, ?, ?);";
+
+    if ($stmt = mysqli_prepare($db, $sql)) {
+      $stmt->bind_param("sss", $agent['codename'], $agent['public_key'], $agent['private_key']);
+      $stmt->execute();
       return true;
-    } else {
+    }
+    else {
       // The SQL INSERT statement failed.
       // Just show the error, not the form
       echo db_error($db);
@@ -109,18 +107,14 @@
     $created_at = date("Y-m-d H:i:s");
     $sql = "INSERT INTO messages ";
     $sql .= "(sender_id, recipient_id, cipher_text, signature, created_at) ";
-    $sql .= "VALUES (";
-    $sql .= "'" . db_escape($db, $message['sender_id']) . "',";
-    $sql .= "'" . db_escape($db, $message['recipient_id']) . "',";
-    $sql .= "'" . db_escape($db, $message['cipher_text']) . "',";
-    $sql .= "'" . db_escape($db, $message['signature']) . "',";
-    $sql .= "'" . $created_at . "'";
-    $sql .= ");";
-    // For INSERT statements, $result is just true/false
-    $result = db_query($db, $sql);
-    if($result) {
+    $sql .= "VALUES (?, ?, ?, ?, ?);";
+
+    if ($stmt = mysqli_prepare($db, $sql)) {
+      $stmt->bind_param("iisss", $message['sender_id'], $message['recipient_id'], $message['cipher_text'], $message['signature'], $message['created_at']);
+      $stmt->execute();
       return true;
-    } else {
+    }
+    else {
       // The SQL INSERT statement failed.
       // Just show the error, not the form
       echo db_error($db);
