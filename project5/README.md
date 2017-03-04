@@ -66,8 +66,8 @@ The following objectives are **optional**:
   Signature:
   XcqwnTZwNtf+o5I3Yr5U0GDCrdu2ND+R9V6GYLvWXZOtcd9tz3Zj+Mn8gf6jtYWI0Q2Wbi+U0N2OKYA74VVWk2KGPwhOPsQsjUSshGgpBp786w8xNaV3HbyimNlRcB6hElS02TeTIbG3SKGZuILNxiiGSWBVHwmH0+sk1Rve5ZswzVgrFSNXMBJRy53vvvqlDfF+CIvEdOu4qRU5wOtRbXPgHPN+5Mqy8IaZwGzpgIQIcKQIQVM9KD6fn1TFdIg1PprBRr+qoCxyVwfUdC539wqumD8Bq8SbnO70NHhLEONBY5Vk5RT5PsGq37hDUqhcCTZhAv4Ju+4rgyyrxUxbIw==
 
-* Bonus Objective 3\.
-  * [ ]  Add a "Create/Verify Checksum" section to the Encryption Tools area.
+* Bonus Objective 3.
+  * [X]  Add a "Create/Verify Checksum" section to the Encryption Tools area.
 
 * Advanced Objective 1\.
   * [ ]  Add support for other symmetric algorithms.
