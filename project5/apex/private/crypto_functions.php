@@ -1,6 +1,7 @@
 <?php
 
-const CIPHER_METHOD = 'AES-256-CBC';
+const DEFAULT_CIPHER_METHOD = "AES-256-CBC";
+
 const PUBLIC_KEY_CONFIG = array(
     "digest_alg" => "sha512",
     "private_key_bits" => 2048,
@@ -8,36 +9,61 @@ const PUBLIC_KEY_CONFIG = array(
 );
 
 // Symmetric Encryption
-function key_encrypt($string, $key, $cipher_method=CIPHER_METHOD) {
-  $key = pad_key_to_256_bits($key);
-  $iv = create_AES_initialization_vector();
-  $encrypted = openssl_encrypt($string, CIPHER_METHOD, $key, OPENSSL_RAW_DATA, $iv);
+function key_encrypt($string, $key, $cipher_method) {
+  $key = pad_key_depending_on($key, $cipher_method);
+  $iv = create_AES_initialization_vector($cipher_method);
+  $encrypted = openssl_encrypt($string, $cipher_method, $key, OPENSSL_RAW_DATA, $iv);
   $message = $iv . $encrypted;
   return base64_encode($message);
 }
 
-function pad_key_to_256_bits($key) {
-  return str_pad($key, 32, '*');
+function key_decrypt($string, $key, $cipher_method) {
+  $key = pad_key_depending_on($key, $cipher_method);
+  $iv_with_ciphertext = base64_decode($string);
+
+  $iv_length = openssl_cipher_iv_length($cipher_method);
+  $iv = substr($iv_with_ciphertext, 0, $iv_length);
+  $ciphertext = substr($iv_with_ciphertext, $iv_length);
+
+  $decrypted = openssl_decrypt($ciphertext, $cipher_method, $key, OPENSSL_RAW_DATA, $iv);
+  return $decrypted;
 }
 
-function create_AES_initialization_vector() {
-  $iv_length = openssl_cipher_iv_length(CIPHER_METHOD);
+function create_AES_initialization_vector($cipher_method) {
+  $iv_length = openssl_cipher_iv_length($cipher_method);
   $iv = openssl_random_pseudo_bytes($iv_length);
   return $iv;
 }
 
-function key_decrypt($string, $key, $cipher_method=CIPHER_METHOD) {
-  $key = pad_key_to_256_bits($key);
-  $iv_with_ciphertext = base64_decode($string);
+function pad_key_depending_on($key, $cipher_method) {
+  switch($cipher_method) {
+    case "AES-192-CBC":
+      $key = str_pad($key, 24, '*');
+      break;
+    case "AES-128-CBC":
+      $key = str_pad($key, 16, '*');
+      break;
+    case "DES-EDE3":
+      $key = str_pad($key, 24, '*');
+      break;
+    case "BF-CBC":
+      $key = pad_to_blowfish_requirements($key);
+      break;
+    default:
+      $key = str_pad($key, 32, '*');
+      break;
+  }
+  return $key;
+}
 
-  // Separate initialization vector and encrypted string
-  $iv_length = openssl_cipher_iv_length(CIPHER_METHOD);
-  $iv = substr($iv_with_ciphertext, 0, $iv_length);
-  $ciphertext = substr($iv_with_ciphertext, $iv_length);
-
-  // Decrypt
-  $plaintext = openssl_decrypt($ciphertext, CIPHER_METHOD, $key, OPENSSL_RAW_DATA, $iv);
-  return $plaintext;
+function pad_to_blowfish_requirements($key) {
+  if ($key < 4) {
+    return str_pad($key, 4, '*');
+  }
+  if ($key > 56) {
+    return substr($key, strlen($key) - (strlen($key) - 56));
+  }
+  return $key;
 }
 
 
