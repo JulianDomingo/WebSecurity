@@ -1,6 +1,6 @@
 # Project 5 - Encryption
 
-Time spent: **X** hours spent in total
+Time spent: **10** hours spent in total
 
 ## User Stories
 
@@ -83,10 +83,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
-
+* [X] It was a little tricky in determining the double agent, but ultimately it was simply a matter of verifying the digital signatures of the emails sent by the double agent.
+ 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Julian Domingo] 
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
