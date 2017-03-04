@@ -25,17 +25,22 @@ The following **required** functionality is completed:
 5. Create/Verify Signature
   * [X]  Required: Repair the create and verify signature code
   
-6\. Encrypted Message 2
-  * [ ]  Required: Decrypt the message
-  * [ ]  Required: Verify the message
-  * [ ]  Required: Include a response message in this README
+6. Encrypted Message 2
+  * [X]  Required: Decrypt the message
+  * [X]  Required: Verify the message
+  * [X]  Required: Include a response message in this README
+    Response: 
+    C6rHdFQge9cFWIx0SLaEDBEwhPjHRoHHRMiJ4dHQfg/jLDXVLfxvwakDwLPaSXgPHJ5B/slwQorJmPqcAfjOzZdiDYthtV256NSk7h0Wn4+Bo5tyN1IeIODpZ9btxceD4fITW52K8kqyJ1NizeusMhnvUMQdiUoazSO6COlQnGlxqBAZQQqaV1CgRLJPxSRrpskQ7a7aCoOSZuSNlbBHRGUsCEOTl3oygXh4RnEjkeS0xM62SxqCUkAlbDcXZIbbd1+htUscdMYbMD3RVhL14jnEbQXJFTt0nGMv+8ulJ1Vvy76bW+jMrbiY2yuSPNYWIdKzWuvo8gsWKLsr3tUeGw==
 
-7\. Agent Messages
-  * [ ]  Required: Repair the dropbox code
-  * [ ]  Required: Repair the messages area
-  * [ ]  Required: Display encrypted messages for all agents
-  * [ ]  Required: Messages indicate whether the message signature is valid
-  * [ ]  Required: Your messages are automatically decrypted
+    Signature: 
+    eUkGoE8ooZCpbAINETL46KfnhMpwga0GCFRse7Xnma1UhguSQFpCTJqlfRMn1RxYhw93X4LCIbu1jiQe05C3UvyW5Neug5yseo+TpQLRaIIiWpnNkhGBf/swxhY1x+Kl6qqBtUBUdDqOHx0teppop9TGu5SqTxINsc5iTRaD+NBfPjH0OzZIMTkzNMNmX+7UswzKFwnckIfgtWjEsMllhyXAlY8sneBMfgG+zz4TqxyDdSbzdYObs/0tFTHCrN3UM5TWHqjgyiS3kFDh9X8VjJ/gP05TjMYikrh8pT2TnvJeACuRCjcdLdZV1TlgFFEbfPAMO6qjaid5MLNluUKX5Q==
+
+7. Agent Messages
+  * [X]  Required: Repair the dropbox code
+  * [X]  Required: Repair the messages area
+  * [X]  Required: Display encrypted messages for all agents
+  * [X]  Required: Messages indicate whether the message signature is valid
+  * [X]  Required: Your messages are automatically decrypted
 
 8\. Identify the Double Agent
   * [ ]  Required: Decrypt as many email messages as possible
