@@ -42,9 +42,9 @@ The following **required** functionality is completed:
   * [X]  Required: Messages indicate whether the message signature is valid
   * [X]  Required: Your messages are automatically decrypted
 
-8\. Identify the Double Agent
-  * [ ]  Required: Decrypt as many email messages as possible
-  * [ ]  Required: Identify the double agent: ____________________
+8. Identify the Double Agent
+  * [X]  Required: Decrypt as many email messages as possible
+  * [X]  Required: Identify the double agent: _______Natasha (Dark Shadow attempted to frame Austin)_____________
 
 The following objectives are **optional**:
 
