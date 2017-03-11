@@ -1,6 +1,6 @@
 <?php
 require_once('../../../private/initialize.php');
-require_login();
+//require_login();
 
 // Set default values for all variables the page needs.
 $errors = array();
@@ -11,6 +11,8 @@ $user = array(
   'username' => '',
   'email' => ''
 );
+$password = '';
+$confirmed_password = '';
 
 if(is_post_request() && request_is_same_domain()) {
   ensure_csrf_token_valid();
@@ -51,7 +53,10 @@ if(is_post_request() && request_is_same_domain()) {
     Email:<br />
     <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
     Password:<br />
-    <input type="text" name="password" value="<?php echo h($user['password']); ?>" /><br />
+    <input type="password" name="password" value="<?php echo h($password); ?>" /><br />
+    Confirm Password:<br />
+    <input type="password" name="confirm_password" value="<?php echo h($confirmed_password); ?>"/><br />
+    <p>Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.</p>
     <br />
     
     <input type="submit" name="submit" value="Create"  />

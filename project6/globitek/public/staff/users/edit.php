@@ -2,6 +2,9 @@
 require_once('../../../private/initialize.php');
 require_login();
 
+$password = '';
+$confirmed_password = '';
+
 if(!isset($_GET['id'])) {
   redirect_to('index.php');
 }
@@ -49,9 +52,13 @@ if(is_post_request() && request_is_same_domain()) {
     Username:<br />
     <input type="text" name="username" value="<?php echo h($user['username']); ?>" /><br />
     Email:<br />
-    <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
-    <br />
-    <input type="submit" name="submit" value="Update"  />
+    <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br /> 
+    Password:<br />
+    <input type="password" name="password" value="<?php echo h($password); ?>" /><br />
+    Confirm Password:<br />
+    <input type="password" name="confirm_password" value="<?php echo h($confirmed_password); ?>"/><br />
+    <p>Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.</p>
+    <input type="submit" name="submit" value="Update"  />  
   </form>
 
 </div>
