@@ -56,4 +56,14 @@
     return true;  // username is not used by anyone
   }
 
+    function has_invalid_password_length($password) {
+        return strlen($password) < 12;
+    }
+
+    function has_invalid_password_format($password) {
+        $containsUpperAndLowerLetter = preg_match('/[A-Za-z]/',      $password);
+        $containsNumber              = preg_match('/\d/',            $password);
+        $containsSymbol              = preg_match('/[~!@#$%^&*+=]/', $password);
+        return $containsUpperAndLowerLetter && $containsNumber && $containsSymbol;
+    }        
 ?>

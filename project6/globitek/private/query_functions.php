@@ -489,6 +489,7 @@
   }
 
   function validate_user($user, $errors=array()) {
+    global $password, $confirmed_password;
     if (is_blank($user['first_name'])) {
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($user['first_name'], array('min' => 2, 'max' => 255))) {
@@ -516,6 +517,16 @@
     } elseif (!is_unique_username($user['username'], $user['id'])) {
       $errors[] = "Username not allowed. Try another.";
     }
+
+    if (is_blank($password)) {
+        $errors[] = "Password cannot be blank.";
+    } elseif (is_blank($confirmed_password)) {
+        $errors[] = "Confirmed password cannot be blank.";
+    } elseif (has_invalid_password_length($password)) {
+        $errors[] = "Password length is too short.";
+    } elseif (has_invalid_password_format($password)) {
+        $errors[] = "Invalid password format.";
+    }
     return $errors;
   }
 
@@ -542,6 +553,7 @@
     // For INSERT statements, $result is just true/false
     $result = db_query($db, $sql);
     if($result) {
+      store_hashed_password();
       return true;
     } else {
       // The SQL INSERT statement failed.
@@ -603,5 +615,21 @@
     }
   }
 
+  function store_hashed_password() {
+      global $db, $password;
 
+      $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+      $sql = "INSERT INTO users (hashed_password) VALUES(?);";
+
+      if ($stmt = mysqli_prepare($db, $sql)) {
+          $stmt->bind_param("s", $hashed_password);
+          $stmt->execute();
+          return true;
+      }
+      else {
+          echo db_error($db);
+          db_close($db);
+          exit;
+      }
+  }
 ?>
