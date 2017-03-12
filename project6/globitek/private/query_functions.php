@@ -633,6 +633,65 @@
       }
   }
 
+  //
+  // LOGIN QUERIES
+  //
+
+    function reset_failed_logins($user) {
+        global $db;
+
+        $sql = "UPDATE failed_logins SET count=? WHERE id=? LIMIT 1";
+        if ($stmt = mysqli_prepare($db, $sql)) { 
+            $stmt->bind_param("i", 0);
+            $stmt->execute();
+            return true;
+        }
+        else {
+            echo db_error($db);
+            db_close($db);
+            exit;
+        }
+    }      
+
+    function insert_failed_login($failed_login) {
+        global $db;
+        
+        $sql = "INSERT INTO failed_logins (username, count, last_attempt) VALUES(?, ?, ?);";
+        if ($stmt = mysqli_prepare($db, $sql)) {
+            $stmt->bind_param("sis", $failed_login['username'], $failed_login['count'], $failed_login['last_attempt']);
+            $stmt->execute();
+            return true;
+        }
+        else {
+            echo db_error($db);
+            db_close($db);
+            exit;
+        }
+    }
+
+    function find_failed_login($username) {
+        global $db;
+        $sql = "SELECT * FROM failed_logins WHERE ";
+        $sql .= "username='" . db_escape($db, $username) . "';";
+        $fl_result = db_query($db, $sql);
+        return $fl_result;
+    }
+
+    function update_failed_login($failed_login) {        
+        global $db;        
+
+        if ($stmt = mysqli_prepare($db, "UPDATE failed_logins SET count=?, last_attempt=? WHERE id=? LIMIT 1")) {
+            $stmt->bind_param("is", $failed_login['count'], $failed_login['last_attempt']);
+            $stmt->execute();
+            return true;
+        }
+        else {
+            echo db_error($db);
+            db_close($db);
+            exit;
+        }
+    }
+
   function record_failed_login($username) {
     // The failure technically already happened, so
     // get the time ASAP.
@@ -654,5 +713,25 @@
       update_failed_login($failed_login);
     }
     return true;
+  }  
+
+  function throttle_time($username) {
+    $threshold = 10;
+    $lockout = 60 * 5; // in seconds
+    $fl_result = find_failed_login($username);
+    $failed_login = db_fetch_assoc($fl_result);
+    if(!isset($failed_login)) { return 0; }
+    if($failed_login['count'] < $threshold) { return 0; }
+    $last_attempt = strtotime($failed_login['last_attempt']);
+    $since_last_attempt = time() - $last_attempt;
+    $remaining_lockout = $lockout - $since_last_attempt;
+    if($remaining_lockout < 0) {
+      reset_failed_login($username);
+      return 0;
+    } else {
+      return $remaining_lockout;
+    }
   }
+
+
 ?>

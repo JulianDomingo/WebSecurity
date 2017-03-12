@@ -36,7 +36,9 @@ if(is_post_request() && request_is_same_domain()) {
         $stored_hashed_password = $user['hashed_password'];
       if (password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
         // Username found, password matches
+        reset_failed_logins($user);
         log_in_user($user);
+
         // Redirect to the staff menu after login
         redirect_to('index.php');
       } else {
