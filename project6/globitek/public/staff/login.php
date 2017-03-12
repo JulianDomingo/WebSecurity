@@ -32,24 +32,28 @@ if(is_post_request() && request_is_same_domain()) {
     $users_result = find_users_by_username($username);
     // No loop, only one result
     $user = db_fetch_assoc($users_result);
-    if($user) {
+    if($user) { 
+      if (throttle_time($user['username'] == 0)) {
         $stored_hashed_password = $user['hashed_password'];
-      if (password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
-        // Username found, password matches
-        reset_failed_logins($user);
-        log_in_user($user);
+        if (password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
+          // Username found, password matches
+          log_in_user($user);
 
-        // Redirect to the staff menu after login
-        redirect_to('index.php');
+          // Redirect to the staff menu after login
+          redirect_to('index.php');
+        } else {
+          // Username found, but password does not match.
+          $errors[] = "Log in was unsuccessful.";
+        }
       } else {
-        // Username found, but password does not match.
-        $errors[] = "Log in was unsuccessful.";
+        $errors[] = "Too many failed logins for " . $user['username'] . ". You will need to wait " . throttle_time($user['username']) . " minutes before attempting another login.";
       }
     } else {
       record_failed_login($user);        
       // No username found
       $errors[] ="Log in was not successful.";
     }
+
   }
 }
 

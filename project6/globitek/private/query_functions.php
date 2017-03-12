@@ -1,3 +1,4 @@
+
 <?php
 
   //
@@ -637,7 +638,7 @@
   // LOGIN QUERIES
   //
 
-    function reset_failed_logins($user) {
+    function reset_failed_login($user) {
         global $db;
 
         $sql = "UPDATE failed_logins SET count=? WHERE id=? LIMIT 1";
@@ -716,7 +717,7 @@
   }  
 
   function throttle_time($username) {
-    $threshold = 10;
+    $threshold = 5;
     $lockout = 60 * 5; // in seconds
     $fl_result = find_failed_login($username);
     $failed_login = db_fetch_assoc($fl_result);
