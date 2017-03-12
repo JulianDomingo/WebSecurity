@@ -44,6 +44,7 @@ if(is_post_request() && request_is_same_domain()) {
         $errors[] = "Log in was unsuccessful.";
       }
     } else {
+      record_failed_login($user);        
       // No username found
       $errors[] ="Log in was not successful.";
     }
