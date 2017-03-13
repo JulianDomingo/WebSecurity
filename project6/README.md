@@ -39,9 +39,9 @@ The following **required** functionality is completed:
 
 The following advanced user stories are optional:
 
-* Bonus Objective 1\.
-  * [ ]  Identify the subtle Username Enumeration weakness. Include a short description of how the code could be modified to be more secure below:
-
+* Bonus Objective 1.
+  * [X]  Identify the subtle Username Enumeration weakness. Include a short description of how the code could be modified to be more secure below:
+    Weakness: there is a time-based username enumeration. When a valid user is found, the request takes a considerably larger amount of time to process the same "Login was unsuccessful" message, due to having to compute the password_verify() method with bcrypt.A potential modification to the code to solve this issue is to execute time.sleep() on a flow path that is quicker than another unique flow path. As a result, all requests will be approximately the same request time, ultimately masking the time-based username enumeration.
 * Bonus Objective 2\.
   * [ ]  User password validations only run when the password is not blank.
   * [ ]  `update_user` only encrypts and updates the password when the password is not blank.
