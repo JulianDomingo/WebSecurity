@@ -1,5 +1,6 @@
 <?php
 require_once('../../private/initialize.php');
+require_once('../../private/query_functions.php');
 
 // Until we learn about encryption, we will use an unencrypted
 // master password as a stand-in. It should go without saying
@@ -31,20 +32,18 @@ if(is_post_request()) {
     // No loop, only one result
     $user = db_fetch_assoc($users_result);
     if ($user) { 
-      if (!throttle_time($user['username'])) {
+      if (!throttle_time($user)) {
         $stored_hashed_password = $user['hashed_password'];
-        if (!isset($user['hashed_password']) || $user['hashed_password'] == '' || password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
-          if (!isset($user['hashed_password']) || $user['hashed_password'] == '') {
-            $user['hashed_password'] = password_hash($password, PASSWORD_BCRYPT);
-            update_user($user);
-            echo "Hashed password: " . $user['hashed_password'];
-          }
+        if (password_verify($password, $stored_hashed_password)) 
+        {
+          reset_failed_login($user);
           // Username found, password matches
           log_in_user($user);
 
           // Redirect to the staff menu after login
-          //redirect_to('index.php');
+          redirect_to('index.php');
         } else {
+          record_failed_login($user);
           // Username found, but password does not match.
           $errors[] = "Log in was unsuccessful.";
         }

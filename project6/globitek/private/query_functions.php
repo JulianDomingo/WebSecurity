@@ -617,21 +617,21 @@
     }
   }
 
-  function store_hashed_password() {
+  function store_hashed_password($user) {
       global $db, $password;
 
       $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-      $sql = "INSERT INTO users (hashed_password) VALUES(?);";
+      $sql = "UPDATE users SET hashed_password=? WHERE id=? LIMIT 1;";
 
       if ($stmt = mysqli_prepare($db, $sql)) {
-          $stmt->bind_param("s", $hashed_password);
-          $stmt->execute();
-          return true;
+        $stmt->bind_param("si", $hashed_password, $user['id']);
+        $stmt->execute();
+        return true;
       }
       else {
-          echo db_error($db);
-          db_close($db);
-          exit;
+        echo db_error($db);
+        db_close($db);
+        exit;
       }
   }
 
@@ -639,21 +639,23 @@
   // LOGIN QUERIES
   //
 
-    function reset_failed_login($user) {
-        global $db;
+  function reset_failed_login($user) {
+    global $db;
 
-        $sql = "UPDATE failed_logins SET count=? WHERE id=? LIMIT 1";
-        if ($stmt = mysqli_prepare($db, $sql)) { 
-            $stmt->bind_param("i", 0);
-            $stmt->execute();
-            return true;
-        }
-        else {
-            echo db_error($db);
-            db_close($db);
-            exit;
-        }
-    }      
+    $sql = "UPDATE failed_logins SET count=? WHERE id=? LIMIT 1";
+    if ($stmt = mysqli_prepare($db, $sql)) { 
+      $count = 0;
+      $userID = $user['id'];
+      $stmt->bind_param("ii", $count, $userID); 
+      $stmt->execute();
+      return true;
+    }
+    else {
+      echo db_error($db);
+      db_close($db);
+      exit;
+    }
+  }      
 
     function insert_failed_login($failed_login) {
         global $db;
@@ -683,7 +685,7 @@
     global $db;        
 
     if ($stmt = mysqli_prepare($db, "UPDATE failed_logins SET count=?, last_attempt=? WHERE id=? LIMIT 1")) {
-        $stmt->bind_param("is", $failed_login['count'], $failed_login['last_attempt']);
+        $stmt->bind_param("isi", $failed_login['count'], $failed_login['last_attempt'], $failed_login['id']);
         $stmt->execute();
         return true;
     }
@@ -695,6 +697,7 @@
   }
 
   function record_failed_login($user) {
+    global $db;
     // The failure technically already happened, so
     // get the time ASAP.
     $sql_date = date("Y-m-d H:i:s");
@@ -733,7 +736,7 @@
         reset_failed_login($username);
         return 0;
     } else {
-        return $remaining_lockout;
+        return ceil($remaining_lockout / 60);
     }
   }
 
