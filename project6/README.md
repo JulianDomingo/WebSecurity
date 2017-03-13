@@ -1,6 +1,6 @@
 # Project 6 - Globitek Authentication and Login Throttling
 
-Time spent: **X** hours spent in total
+Time spent: **10** hours spent in total
 
 ## User Stories
 
@@ -76,10 +76,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 ## Notes
 
 Describe any challenges encountered while building the app.
+ * [X] Fixing the query problems I had when implementing the login throttling was troublesome as I initially didn't know that PHP's "bind_param()" method for prepared statements only takes in values by reference. Since I never had to pass anything by value until now in regards to updating a user's failed_login['count'] to 0, figuring this out was new to me.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Julian Domingo]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
