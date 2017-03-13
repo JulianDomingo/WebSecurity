@@ -11,11 +11,11 @@ The following **required** functionality is completed:
   * [X]  Strong password requirements text
 
 2. Data validations
-  * [ ]  Returns an error if password or confirm_password are blank.
-  * [ ]  Returns an error if password and confirm_password do not match.
-  * [ ]  Returns an error if password is not at least 12 characters long.
-  * [ ]  Returns an error if password does not meet character requirements.
-  * [ ]  Returns any errors related to other validations already on the user.
+  * [X]  Returns an error if password or confirm_password are blank.
+  * [X]  Returns an error if password and confirm_password do not match.
+  * [X]  Returns an error if password is not at least 12 characters long.
+  * [X]  Returns an error if password does not meet character requirements.
+  * [X]  Returns any errors related to other validations already on the user.
 
 3. Saving a user
   * [X]  Encrypts the password
@@ -34,8 +34,8 @@ The following **required** functionality is completed:
 6. After any successful login:
   * [X]  Set the failed_logins.count for the username to 0.
 
-7\. SQLi and XSS
-  * [ ]  Do not introduce any SQLI Injection and Cross-Site Scripting vulnerabilities.
+7. SQLi and XSS
+  * [X]  Do not introduce any SQLI Injection and Cross-Site Scripting vulnerabilities.
 
 The following advanced user stories are optional:
 

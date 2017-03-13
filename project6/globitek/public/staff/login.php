@@ -4,16 +4,15 @@ require_once('../../private/initialize.php');
 // Until we learn about encryption, we will use an unencrypted
 // master password as a stand-in. It should go without saying
 // that this should *never* be done in real production code.
-//  $master_password = 'secret';
+// $master_password = 'secret';
 
 // Set default values for all variables the page needs.
 $errors = array();
 $username = '';
 $password = '';
 
-if(is_post_request() && request_is_same_domain()) {
+if(is_post_request()) {
   ensure_csrf_token_valid();
-
   // Confirm that values are present before accessing them.
   if(isset($_POST['username'])) { $username = $_POST['username']; }
   if(isset($_POST['password'])) { $password = $_POST['password']; }
@@ -27,36 +26,38 @@ if(is_post_request() && request_is_same_domain()) {
   }
 
   // If there were no errors, submit data to database
-  if (empty($errors)) {
-
+  if (empty($errors)) {   
     $users_result = find_users_by_username($username);
     // No loop, only one result
     $user = db_fetch_assoc($users_result);
-    if($user) { 
-      if (throttle_time($user['username'] == 0)) {
+    if ($user) { 
+      if (!throttle_time($user['username'])) {
         $stored_hashed_password = $user['hashed_password'];
-        if (password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
+        if (!isset($user['hashed_password']) || $user['hashed_password'] == '' || password_verify(password_hash($password, PASSWORD_BCRYPT), $stored_hashed_password)) {
+          if (!isset($user['hashed_password']) || $user['hashed_password'] == '') {
+            $user['hashed_password'] = password_hash($password, PASSWORD_BCRYPT);
+            update_user($user);
+            echo "Hashed password: " . $user['hashed_password'];
+          }
           // Username found, password matches
           log_in_user($user);
 
           // Redirect to the staff menu after login
-          redirect_to('index.php');
+          //redirect_to('index.php');
         } else {
           // Username found, but password does not match.
           $errors[] = "Log in was unsuccessful.";
         }
       } else {
-        $errors[] = "Too many failed logins for " . $user['username'] . ". You will need to wait " . throttle_time($user['username']) . " minutes before attempting another login.";
+        $errors[] = "Too many failed logins for " . $user['username'] . ". You will need to wait " . throttle_time($user) . " minutes before attempting another login.";
       }
     } else {
       record_failed_login($user);        
       // No username found
       $errors[] ="Log in was not successful.";
     }
-
   }
 }
-
 ?>
 <?php $page_title = 'Log in'; ?>
 <?php include(SHARED_PATH . '/header.php'); ?>

@@ -579,7 +579,8 @@
     $sql .= "first_name='" . db_escape($db, $user['first_name']) . "', ";
     $sql .= "last_name='" . db_escape($db, $user['last_name']) . "', ";
     $sql .= "email='" . db_escape($db, $user['email']) . "', ";
-    $sql .= "username='" . db_escape($db, $user['username']) . "' ";
+    $sql .= "username='" . db_escape($db, $user['username']) . "', ";
+    $sql .= "hashed_password='" . db_escape($db, $user['hashed_password']) . "' ";
     $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_user statements, $result is just true/false
@@ -670,67 +671,69 @@
         }
     }
 
-    function find_failed_login($username) {
-        global $db;
-        $sql = "SELECT * FROM failed_logins WHERE ";
-        $sql .= "username='" . db_escape($db, $username) . "';";
-        $fl_result = db_query($db, $sql);
-        return $fl_result;
+  function find_failed_login($username) {
+    global $db;
+    $sql = "SELECT * FROM failed_logins WHERE ";
+    $sql .= "username='" . db_escape($db, db_escape($db, $username)) . "';";
+    $fl_result = db_query($db, $sql);
+    return $fl_result;
+  }
+
+  function update_failed_login($failed_login) {        
+    global $db;        
+
+    if ($stmt = mysqli_prepare($db, "UPDATE failed_logins SET count=?, last_attempt=? WHERE id=? LIMIT 1")) {
+        $stmt->bind_param("is", $failed_login['count'], $failed_login['last_attempt']);
+        $stmt->execute();
+        return true;
     }
-
-    function update_failed_login($failed_login) {        
-        global $db;        
-
-        if ($stmt = mysqli_prepare($db, "UPDATE failed_logins SET count=?, last_attempt=? WHERE id=? LIMIT 1")) {
-            $stmt->bind_param("is", $failed_login['count'], $failed_login['last_attempt']);
-            $stmt->execute();
-            return true;
-        }
-        else {
-            echo db_error($db);
-            db_close($db);
-            exit;
-        }
+    else {
+        echo db_error($db);
+        db_close($db);
+        exit;
     }
+  }
 
-  function record_failed_login($username) {
+  function record_failed_login($user) {
     // The failure technically already happened, so
     // get the time ASAP.
     $sql_date = date("Y-m-d H:i:s");
 
-    $fl_result = find_failed_login($username);
+    $fl_result = find_failed_login($user['username']);
     $failed_login = db_fetch_assoc($fl_result);
 
     if(!$failed_login) {
       $failed_login = [
-        'username' => $username,
+        'username' => db_escape($db, $user['username']),
         'count' => 1,
-        'last_attempt' => $sql_date
+        'last_attempt' => db_escape($db, $sql_date)
       ];
       insert_failed_login($failed_login);
     } else {
-      $failed_login['count'] = $failed_login['count'] + 1;
-      $failed_login['last_attempt'] = $sql_date;
+      $failed_login['count'] = db_escape($db, $failed_login['count'] + 1);
+      $failed_login['last_attempt'] = db_escape($db, $sql_date);
       update_failed_login($failed_login);
     }
     return true;
   }  
 
-  function throttle_time($username) {
-    $threshold = 5;
+  function throttle_time($user) {
+    global $db;
+    $username = db_escape($db, $user['username']);
+    $threshold = 5; // 5 failed attempts permitted at most.
     $lockout = 60 * 5; // in seconds
     $fl_result = find_failed_login($username);
     $failed_login = db_fetch_assoc($fl_result);
     if(!isset($failed_login)) { return 0; }
     if($failed_login['count'] < $threshold) { return 0; }
-    $last_attempt = strtotime($failed_login['last_attempt']);
+    $last_attempt = strtotime(db_escape($db, $failed_login['last_attempt']));
     $since_last_attempt = time() - $last_attempt;
     $remaining_lockout = $lockout - $since_last_attempt;
     if($remaining_lockout < 0) {
-      reset_failed_login($username);
-      return 0;
+        reset_failed_login($username);
+        return 0;
     } else {
-      return $remaining_lockout;
+        return $remaining_lockout;
     }
   }
 
