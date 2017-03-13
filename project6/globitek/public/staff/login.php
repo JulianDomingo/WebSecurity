@@ -1,3 +1,4 @@
+
 <?php
 require_once('../../private/initialize.php');
 require_once('../../private/query_functions.php');
@@ -11,7 +12,6 @@ require_once('../../private/query_functions.php');
 $errors = array();
 $username = '';
 $password = '';
-
 if(is_post_request()) {
   ensure_csrf_token_valid();
   // Confirm that values are present before accessing them.
@@ -32,14 +32,13 @@ if(is_post_request()) {
     // No loop, only one result
     $user = db_fetch_assoc($users_result);
     if ($user) { 
-      if (!throttle_time($user)) {
+      if (!throttle_time($user) || password_verify($password, $user['hashed_password'])) {
         $stored_hashed_password = $user['hashed_password'];
         if (password_verify($password, $stored_hashed_password)) 
         {
           reset_failed_login($user);
           // Username found, password matches
           log_in_user($user);
-
           // Redirect to the staff menu after login
           redirect_to('index.php');
         } else {
@@ -47,11 +46,11 @@ if(is_post_request()) {
           // Username found, but password does not match.
           $errors[] = "Log in was unsuccessful.";
         }
-      } else {
+      } 
+      else {
         $errors[] = "Too many failed logins for " . $user['username'] . ". You will need to wait " . throttle_time($user) . " minutes before attempting another login.";
       }
-    } else {
-      record_failed_login($user);        
+    } else {       
       // No username found
       $errors[] ="Log in was not successful.";
     }
