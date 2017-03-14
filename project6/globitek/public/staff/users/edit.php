@@ -1,8 +1,9 @@
 <?php
 require_once('../../../private/initialize.php');
 require_once('../../../private/validation_functions.php');
-require_login();
+require_once('../../../private/auth_functions.php');
 
+require_login();
 $password = '';
 $confirmed_password = '';
 $previous_password = '';

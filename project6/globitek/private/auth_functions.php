@@ -73,8 +73,8 @@
   function my_password_hash($password) {
     $hash_format = "$2y$10$";
 
-    $options[
-      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+    $options = [
+      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM)
     ];
 
     return crypt($password, $hash_format, $options);
@@ -99,11 +99,11 @@
     $character_set = array_merge($character_set, $symbols);
 
     for ($character = 0; $character < $character_count; $character++) {
-      $strong_password .= $character_set[rand(0, len($character_set) - 1)];
+      $strong_password .= $character_set[array_rand($character_set)];
     }
 
-    // Recurse until a valid strong password is generated.
     while (!character_conditions_met_for($strong_password, $numbers, $symbols, $lowercase, $uppercase)) {
+      $strong_password = '';
       $strong_password = generate_strong_password($character_count);
     }
 
@@ -111,17 +111,26 @@
   }
 
   function character_conditions_met_for($strong_password, $numbers, $symbols, $lowercase, $uppercase) {
-    for ($character = 0; $character < strlen($strong_password); $character++) {
-      if (!in_array(substr($character), $numbers) ||
-          !in_array(substr($character), $symbols) ||
-          !in_array(substr($character), $lowercase) ||
-          !in_array(substr($character), $uppercase))
-      {
-        return false;
-      }
-    }
+    $num_found = false;
+    $symbol_found = false;
+    $lowercase_found = false;
+    $uppercase_found = false;
 
-    return true;
+    for ($character = 0; $character < strlen($strong_password); $character++) {
+        if (in_array(substr($strong_password, $character, $character), $numbers)) {
+            $num_found = true;
+        }
+        if (in_array(substr($strong_password, $character, $character), $symbols)) {
+            $symbol_found = true;
+        }
+        if (in_array(substr($strong_password, $character, $character), $lowercase)) {
+            $lowercase_found = true;
+        }
+        if (in_array(substr($strong_password, $character, $character), $uppercase)) {
+            $uppercase_found = true;
+        }
+    }
+    return $num_found && $symbol_found && $lowercase_found && $uppercase_found;
   }
 
 ?>
