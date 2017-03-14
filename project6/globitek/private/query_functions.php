@@ -491,6 +491,7 @@
 
   function validate_user($user, $errors=array()) {
     global $password, $confirmed_password;
+
     if (is_blank($user['first_name'])) {
       $errors[] = "First name cannot be blank.";
     } elseif (!has_length($user['first_name'], array('min' => 2, 'max' => 255))) {
@@ -519,16 +520,22 @@
       $errors[] = "Username not allowed. Try another.";
     }
 
-    if (is_blank($password)) {
-        $errors[] = "Password cannot be blank.";
-    } elseif (is_blank($confirmed_password)) {
-        $errors[] = "Confirmed password cannot be blank.";
-    } elseif (has_invalid_password_length($password)) {
-        $errors[] = "Password length is too short.";
-    } elseif (has_invalid_password_format($password)) {
-        $errors[] = "Invalid password format.";
+    if (!is_blank($password) && !is_blank($confirmed_password)) {
+      if (has_invalid_password_length($password)) {
+          $errors[] = "Password length is too short.";
+      } elseif (has_invalid_password_format($password)) {
+          $errors[] = "Invalid password format.";
+      } elseif (!has_correct_previous_password($user)) {
+          $errors[] = "Previous password is incorrect.";
+      }
     }
+
     return $errors;
+  }
+
+  function has_correct_previous_password($user) {
+    global $db, $previous_password;
+    return password_verify($previous_password, $user['hashed_password']);
   }
 
   // Add a new user to the table
@@ -541,14 +548,17 @@
       return $errors;
     }
 
+    store_hashed_password($user);
+
     $created_at = date("Y-m-d H:i:s");
     $sql = "INSERT INTO users ";
-    $sql .= "(first_name, last_name, email, username, created_at) ";
+    $sql .= "(first_name, last_name, email, username, hashed_password, created_at) ";
     $sql .= "VALUES (";
     $sql .= "'" . db_escape($db, $user['first_name']) . "',";
     $sql .= "'" . db_escape($db, $user['last_name']) . "',";
     $sql .= "'" . db_escape($db, $user['email']) . "',";
     $sql .= "'" . db_escape($db, $user['username']) . "',";
+    $sql .= "'" . db_escape($db, $hashed_password) . "', ";
     $sql .= "'" . $created_at . "'";
     $sql .= ");";
     // For INSERT statements, $result is just true/false
@@ -568,7 +578,11 @@
   // Edit a user record
   // Either returns true or an array of errors
   function update_user($user) {
-    global $db;
+    global $db, $password;
+
+    if (!is_blank($password)) {
+      store_hashed_password($user);
+    }
 
     $errors = validate_user($user);
     if (!empty($errors)) {
@@ -579,8 +593,8 @@
     $sql .= "first_name='" . db_escape($db, $user['first_name']) . "', ";
     $sql .= "last_name='" . db_escape($db, $user['last_name']) . "', ";
     $sql .= "email='" . db_escape($db, $user['email']) . "', ";
-    $sql .= "username='" . db_escape($db, $user['username']) . "', ";
-    $sql .= "hashed_password='" . db_escape($db, $user['hashed_password']) . "' ";
+    $sql .= "username='" . db_escape($db, $user['username']) . "' ";
+    // $sql .= "hashed_password='" . db_escape($db, $user['hashed_password']) . "' ";
     $sql .= "WHERE id='" . db_escape($db, $user['id']) . "' ";
     $sql .= "LIMIT 1;";
     // For update_user statements, $result is just true/false
@@ -620,7 +634,11 @@
   function store_hashed_password($user) {
       global $db, $password;
 
-      $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+      $options = [
+        'cost' => 11,
+      ];
+
+      $hashed_password = password_hash($password, PASSWORD_BCRYPT, $options);
       $sql = "UPDATE users SET hashed_password=? WHERE id=? LIMIT 1;";
 
       if ($stmt = mysqli_prepare($db, $sql)) {

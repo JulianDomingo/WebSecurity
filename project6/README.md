@@ -42,15 +42,17 @@ The following advanced user stories are optional:
 * Bonus Objective 1.
   * [X]  Identify the subtle Username Enumeration weakness. Include a short description of how the code could be modified to be more secure below:
     Weakness: there is a time-based username enumeration. When a valid user is found, the request takes a considerably larger amount of time to process the same "Login was unsuccessful" message, due to having to compute the password_verify() method with bcrypt.A potential modification to the code to solve this issue is to execute time.sleep() on a flow path that is quicker than another unique flow path. As a result, all requests will be approximately the same request time, ultimately masking the time-based username enumeration.
+
 * Bonus Objective 2\.
-  * [ ]  User password validations only run when the password is not blank.
-  * [ ]  `update_user` only encrypts and updates the password when the password is not blank.
+  * [X]  User password validations only run when the password is not blank.
+  * [X]  `update_user` only encrypts and updates the password when the password is not blank.
 
 * Bonus Objective 3\.
-  * [ ]  Create a new user using cost 10.
-  * [ ]  Set bcrypt "cost" parameter to 11 (for both insert and update).
-  * [ ]  Try to login with the "cost 10" user.
-  * [ ]  Briefly describe why login still works even after the cost is changed:
+  * [X]  Create a new user using cost 10.
+  * [X]  Set bcrypt "cost" parameter to 11 (for both insert and update).
+  * [X]  Try to login with the "cost 10" user.
+  * [X]  Briefly describe why login still works even after the cost is changed:
+    Answer: the 'cost' parameter defines how many iterations are necessary to compute a password hash, growing exponentially as the cost value increments. Simply changing the cost to 11 only decreases the vulnerability from an attacker's attempt to crack the password hash.
 
 * Bonus Objective 4\.
   * [ ]  Add "Previous password" to "public/staff/users/edit.php"

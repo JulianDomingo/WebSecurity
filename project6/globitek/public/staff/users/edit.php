@@ -5,6 +5,7 @@ require_login();
 
 $password = '';
 $confirmed_password = '';
+$previous_password = '';
 
 if(!isset($_GET['id'])) {
   redirect_to('index.php');
@@ -58,6 +59,10 @@ if(is_post_request() && request_is_same_domain()) {
     <input type="password" name="password" value="<?php echo h($password); ?>" /><br />
     Confirm Password:<br />
     <input type="password" name="confirm_password" value="<?php echo h($confirmed_password); ?>"/><br />
+    Previous Password:<br />
+    <input type="password" name="previous_password" value="<?php echo h($previous_password); ?>"/><br />
+    Strong password suggestion: <br/>
+    <input type="text" name="strong_password" value="<?php echo h(generate_strong_password(12)); ?>"/><br />
     <p>Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.</p>
     <input type="submit" name="submit" value="Update"  />  
   </form>

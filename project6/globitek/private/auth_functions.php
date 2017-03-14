@@ -69,4 +69,59 @@
     }
   }
 
+  // Manual implementation of password_hash()
+  function my_password_hash($password) {
+    $hash_format = "$2y$10$";
+
+    $options[
+      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+    ];
+
+    return crypt($password, $hash_format, $options);
+  }
+
+  // Manual implementation of password_verify()
+  function my_password_verify($password, $hashed_password) {
+    return $hashed_password === my_password_hash($password);
+  }
+
+  // Advanced objective 2
+  function generate_strong_password($character_count) {
+    $strong_password = '';
+
+    $numbers = ['0123456789'];
+    $symbols = ['~!@#$%^&*+=?'];
+    $lowercase = range('a', 'z');
+    $uppercase = range('A', 'Z');
+   
+    $character_set = array_merge($lowercase, $uppercase);
+    $character_set = array_merge($character_set, $numbers);
+    $character_set = array_merge($character_set, $symbols);
+
+    for ($character = 0; $character < $character_count; $character++) {
+      $strong_password .= $character_set[rand(0, len($character_set) - 1)];
+    }
+
+    // Recurse until a valid strong password is generated.
+    while (!character_conditions_met_for($strong_password, $numbers, $symbols, $lowercase, $uppercase)) {
+      $strong_password = generate_strong_password($character_count);
+    }
+
+    return $strong_password;
+  }
+
+  function character_conditions_met_for($strong_password, $numbers, $symbols, $lowercase, $uppercase) {
+    for ($character = 0; $character < strlen($strong_password); $character++) {
+      if (!in_array(substr($character), $numbers) ||
+          !in_array(substr($character), $symbols) ||
+          !in_array(substr($character), $lowercase) ||
+          !in_array(substr($character), $uppercase))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
 ?>
