@@ -1,0 +1,245 @@
+[!] 33 vulnerabilities identified from the version number
+
+[!] Title: WordPress <= 4.2.2 - Authenticated Stored Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8111
+    Reference: https://wordpress.org/news/2015/07/wordpress-4-2-3/
+    Reference: https://twitter.com/klikkioy/status/624264122570526720
+    Reference: https://klikki.fi/adv/wordpress3.html
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5622
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5623
+[i] Fixed in: 4.2.3
+
+[!] Title: WordPress <= 4.2.3 - wp_untrash_post_comments SQL Injection 
+    Reference: https://wpvulndb.com/vulnerabilities/8126
+    Reference: https://github.com/WordPress/WordPress/commit/70128fe7605cb963a46815cf91b0a5934f70eff5
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-2213
+[i] Fixed in: 4.2.4
+
+[!] Title: WordPress <= 4.2.3 - Timing Side Channel Attack
+    Reference: https://wpvulndb.com/vulnerabilities/8130
+    Reference: https://core.trac.wordpress.org/changeset/33536
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5730
+[i] Fixed in: 4.2.4
+
+[!] Title: WordPress <= 4.2.3 - Widgets Title Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8131
+    Reference: https://core.trac.wordpress.org/changeset/33529
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5732
+[i] Fixed in: 4.2.4
+
+[!] Title: WordPress <= 4.2.3 - Nav Menu Title Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8132
+    Reference: https://core.trac.wordpress.org/changeset/33541
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5733
+[i] Fixed in: 4.2.4
+
+[!] Title: WordPress <= 4.2.3 - Legacy Theme Preview Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8133
+    Reference: https://core.trac.wordpress.org/changeset/33549
+    Reference: https://blog.sucuri.net/2015/08/persistent-xss-vulnerability-in-wordpress-explained.html
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5734
+[i] Fixed in: 4.2.4
+
+[!] Title: WordPress <= 4.3 - Authenticated Shortcode Tags Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8186
+    Reference: https://wordpress.org/news/2015/09/wordpress-4-3-1/
+    Reference: http://blog.checkpoint.com/2015/09/15/finding-vulnerabilities-in-core-wordpress-a-bug-hunters-trilogy-part-iii-ultimatum/
+    Reference: http://blog.knownsec.com/2015/09/wordpress-vulnerability-analysis-cve-2015-5714-cve-2015-5715/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5714
+[i] Fixed in: 4.2.5
+
+[!] Title: WordPress <= 4.3 - User List Table Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8187
+    Reference: https://wordpress.org/news/2015/09/wordpress-4-3-1/
+    Reference: https://github.com/WordPress/WordPress/commit/f91a5fd10ea7245e5b41e288624819a37adf290a
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7989
+[i] Fixed in: 4.2.5
+
+[!] Title: WordPress <= 4.3 - Publish Post & Mark as Sticky Permission Issue
+    Reference: https://wpvulndb.com/vulnerabilities/8188
+    Reference: https://wordpress.org/news/2015/09/wordpress-4-3-1/
+    Reference: http://blog.checkpoint.com/2015/09/15/finding-vulnerabilities-in-core-wordpress-a-bug-hunters-trilogy-part-iii-ultimatum/
+    Reference: http://blog.knownsec.com/2015/09/wordpress-vulnerability-analysis-cve-2015-5714-cve-2015-5715/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-5715
+[i] Fixed in: 4.2.5
+
+[!] Title: WordPress  3.7-4.4 - Authenticated Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8358
+    Reference: https://wordpress.org/news/2016/01/wordpress-4-4-1-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/7ab65139c6838910426567849c7abed723932b87
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-1564
+[i] Fixed in: 4.2.6
+
+[!] Title: WordPress 3.7-4.4.1 - Local URIs Server Side Request Forgery (SSRF)
+    Reference: https://wpvulndb.com/vulnerabilities/8376
+    Reference: https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
+    Reference: https://core.trac.wordpress.org/changeset/36435
+    Reference: https://hackerone.com/reports/110801
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2222
+[i] Fixed in: 4.2.7
+
+[!] Title: WordPress 3.7-4.4.1 - Open Redirect
+    Reference: https://wpvulndb.com/vulnerabilities/8377
+    Reference: https://wordpress.org/news/2016/02/wordpress-4-4-2-security-and-maintenance-release/
+    Reference: https://core.trac.wordpress.org/changeset/36444
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-2221
+[i] Fixed in: 4.2.7
+
+[!] Title: WordPress <= 4.4.2 - SSRF Bypass using Octal & Hexedecimal IP addresses
+    Reference: https://wpvulndb.com/vulnerabilities/8473
+    Reference: https://codex.wordpress.org/Version_4.5
+    Reference: https://github.com/WordPress/WordPress/commit/af9f0520875eda686fd13a427fd3914d7aded049
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4029
+[i] Fixed in: 4.5
+
+[!] Title: WordPress <= 4.4.2 - Reflected XSS in Network Settings
+    Reference: https://wpvulndb.com/vulnerabilities/8474
+    Reference: https://codex.wordpress.org/Version_4.5
+    Reference: https://github.com/WordPress/WordPress/commit/cb2b3ed3c7d68f6505bfb5c90257e6aaa3e5fcb9
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6634
+[i] Fixed in: 4.5
+
+[!] Title: WordPress <= 4.4.2 - Script Compression Option CSRF
+    Reference: https://wpvulndb.com/vulnerabilities/8475
+    Reference: https://codex.wordpress.org/Version_4.5
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6635
+[i] Fixed in: 4.5
+
+[!] Title: WordPress 4.2-4.5.1 - MediaElement.js Reflected Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8488
+    Reference: https://wordpress.org/news/2016/05/wordpress-4-5-2/
+    Reference: https://github.com/WordPress/WordPress/commit/a493dc0ab5819c8b831173185f1334b7c3e02e36
+    Reference: https://gist.github.com/cure53/df34ea68c26441f3ae98f821ba1feb9c
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4567
+[i] Fixed in: 4.5.2
+
+[!] Title: WordPress <= 4.5.1 - Pupload Same Origin Method Execution (SOME)
+    Reference: https://wpvulndb.com/vulnerabilities/8489
+    Reference: https://wordpress.org/news/2016/05/wordpress-4-5-2/
+    Reference: https://github.com/WordPress/WordPress/commit/c33e975f46a18f5ad611cf7e7c24398948cecef8
+    Reference: https://gist.github.com/cure53/09a81530a44f6b8173f545accc9ed07e
+    Reference: http://avlidienbrunn.com/wp_some_loader.php
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-4566
+[i] Fixed in: 4.2.8
+
+[!] Title: WordPress 4.2-4.5.2 - Authenticated Attachment Name Stored XSS
+    Reference: https://wpvulndb.com/vulnerabilities/8518
+    Reference: https://wordpress.org/news/2016/06/wordpress-4-5-3/
+    Reference: https://github.com/WordPress/WordPress/commit/4372cdf45d0f49c74bbd4d60db7281de83e32648
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5833
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5834
+[i] Fixed in: 4.2.9
+
+[!] Title: WordPress 3.6-4.5.2 - Authenticated Revision History Information Disclosure
+    Reference: https://wpvulndb.com/vulnerabilities/8519
+    Reference: https://wordpress.org/news/2016/06/wordpress-4-5-3/
+    Reference: https://github.com/WordPress/WordPress/commit/a2904cc3092c391ac7027bc87f7806953d1a25a1
+    Reference: https://www.wordfence.com/blog/2016/06/wordpress-core-vulnerability-bypass-password-protected-posts/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5835
+[i] Fixed in: 4.2.9
+
+[!] Title: WordPress 2.6.0-4.5.2 - Unauthorized Category Removal from Post
+    Reference: https://wpvulndb.com/vulnerabilities/8520
+    Reference: https://wordpress.org/news/2016/06/wordpress-4-5-3/
+    Reference: https://github.com/WordPress/WordPress/commit/6d05c7521baa980c4efec411feca5e7fab6f307c
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-5837
+[i] Fixed in: 4.2.9
+
+[!] Title: WordPress 2.5-4.6 - Authenticated Stored Cross-Site Scripting via Image Filename
+    Reference: https://wpvulndb.com/vulnerabilities/8615
+    Reference: https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/c9e60dab176635d4bfaaf431c0ea891e4726d6e0
+    Reference: https://sumofpwn.nl/advisory/2016/persistent_cross_site_scripting_vulnerability_in_wordpress_due_to_unsafe_processing_of_file_names.html
+    Reference: http://seclists.org/fulldisclosure/2016/Sep/6
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7168
+[i] Fixed in: 4.2.10
+
+[!] Title: WordPress 2.8-4.6 - Path Traversal in Upgrade Package Uploader
+    Reference: https://wpvulndb.com/vulnerabilities/8616
+    Reference: https://wordpress.org/news/2016/09/wordpress-4-6-1-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/54720a14d85bc1197ded7cb09bd3ea790caa0b6e
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7169
+[i] Fixed in: 4.2.10
+
+[!] Title: WordPress 2.9-4.7 - Authenticated Cross-Site scripting (XSS) in update-core.php
+    Reference: https://wpvulndb.com/vulnerabilities/8716
+    Reference: https://github.com/WordPress/WordPress/blob/c9ea1de1441bb3bda133bf72d513ca9de66566c2/wp-admin/update-core.php
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5488
+[i] Fixed in: 4.2.11
+
+[!] Title: WordPress 3.4-4.7 - Stored Cross-Site Scripting (XSS) via Theme Name fallback
+    Reference: https://wpvulndb.com/vulnerabilities/8718
+    Reference: https://www.mehmetince.net/low-severity-wordpress/
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/ce7fb2934dd111e6353784852de8aea2a938b359
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5490
+[i] Fixed in: 4.2.11
+
+[!] Title: WordPress <= 4.7 - Post via Email Checks mail.example.com by Default
+    Reference: https://wpvulndb.com/vulnerabilities/8719
+    Reference: https://github.com/WordPress/WordPress/commit/061e8788814ac87706d8b95688df276fe3c8596a
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5491
+[i] Fixed in: 4.2.11
+
+[!] Title: WordPress 2.8-4.7 - Accessibility Mode Cross-Site Request Forgery (CSRF)
+    Reference: https://wpvulndb.com/vulnerabilities/8720
+    Reference: https://github.com/WordPress/WordPress/commit/03e5c0314aeffe6b27f4b98fef842bf0fb00c733
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5492
+[i] Fixed in: 4.2.11
+
+[!] Title: WordPress 3.0-4.7 - Cryptographically Weak Pseudo-Random Number Generator (PRNG)
+    Reference: https://wpvulndb.com/vulnerabilities/8721
+    Reference: https://github.com/WordPress/WordPress/commit/cea9e2dc62abf777e06b12ec4ad9d1aaa49b29f4
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-1-security-and-maintenance-release/
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5493
+[i] Fixed in: 4.2.11
+
+[!] Title: WordPress 4.2.0-4.7.1 - Press This UI Available to Unauthorised Users
+    Reference: https://wpvulndb.com/vulnerabilities/8729
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+    Reference: https://github.com/WordPress/WordPress/commit/21264a31e0849e6ff793a06a17de877dd88ea454
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5610
+[i] Fixed in: 4.2.12
+
+[!] Title: WordPress 3.5-4.7.1 - WP_Query SQL Injection
+    Reference: https://wpvulndb.com/vulnerabilities/8730
+    Reference: https://wordpress.org/news/2017/01/wordpress-4-7-2-security-release/
+    Reference: https://github.com/WordPress/WordPress/commit/85384297a60900004e27e417eac56d24267054cb
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-5611
+[i] Fixed in: 4.2.12
+
+[!] Title: WordPress 3.6.0-4.7.2 - Authenticated Cross-Site Scripting (XSS) via Media File Metadata
+    Reference: https://wpvulndb.com/vulnerabilities/8765
+    Reference: https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/28f838ca3ee205b6f39cd2bf23eb4e5f52796bd7
+    Reference: https://sumofpwn.nl/advisory/2016/wordpress_audio_playlist_functionality_is_affected_by_cross_site_scripting.html
+    Reference: http://seclists.org/oss-sec/2017/q1/563
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6814
+[i] Fixed in: 4.2.13
+
+[!] Title: WordPress 2.8.1-4.7.2 - Control Characters in Redirect URL Validation
+    Reference: https://wpvulndb.com/vulnerabilities/8766
+    Reference: https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/288cd469396cfe7055972b457eb589cea51ce40e
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6815
+[i] Fixed in: 4.2.13
+
+[!] Title: WordPress  4.0-4.7.2 - Authenticated Stored Cross-Site Scripting (XSS) in YouTube URL Embeds
+    Reference: https://wpvulndb.com/vulnerabilities/8768
+    Reference: https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/419c8d97ce8df7d5004ee0b566bc5e095f0a6ca8
+    Reference: https://blog.sucuri.net/2017/03/stored-xss-in-wordpress-core.html
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6817
+[i] Fixed in: 4.2.13
+
+[!] Title: WordPress 4.2-4.7.2 - Press This CSRF DoS
+    Reference: https://wpvulndb.com/vulnerabilities/8770
+    Reference: https://wordpress.org/news/2017/03/wordpress-4-7-3-security-and-maintenance-release/
+    Reference: https://github.com/WordPress/WordPress/commit/263831a72d08556bc2f3a328673d95301a152829
+    Reference: https://sumofpwn.nl/advisory/2016/cross_site_request_forgery_in_wordpress_press_this_function_allows_dos.html
+    Reference: http://seclists.org/oss-sec/2017/q1/562
+    Reference: https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-6819
+[i] Fixed in: 4.2.13
