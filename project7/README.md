@@ -16,14 +16,14 @@ Time spent: **X** hours spent in total
   - [ ] Affected source code: N/A
     - [Link 1](https://ibb.co/hwUUDv)
 
-1. (Required) Vulnerability Name or ID
-  - [ ] Summary: 
-    - Vulnerability types:
-    - Tested in version:
-    - Fixed in version: 
+1. Authenticated Shortcode Tags Cross-Site Scripting (XSS) 
+  - [ ] Summary: XSS can be inserted into a content post by taking advantage of when validation is done using the KSES variant used by WordPress and the shortcode parsing. Since KSES validation is done first, which checks for HTML correctness, the example code below will not fail the validation done in KSES. As a result, when shortcode parsing ins finished, it leaves an unclosed 'href' attribute allowing for the attacker to inject an arbitrary <a> attribute for example to input malicious JavaScript. 
+    - Vulnerability types: XSS (Through WordPress shortcode)
+    - Tested in version: 4.3
+    - Fixed in version: 4.4
   - [ ] GIF Walkthrough: 
-  - [ ] Steps to recreate: 
-  - [ ] Affected source code:
+  - [ ] Steps to recreate: Post "XSS LOL!!![caption width='1' caption='<a href="' ">]</a><a href="http://onMouseOver='alert(/xss/)' style='display:block;position:absolute;top:0px;left:0px;margin-left:-1000px;margin-top:-1000px;width:99999px;height:99999px;'"></a>" into the content of a new post, then view the post.
+  - [ ] Affected source code: N/A
     - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
 1. (Required) Vulnerability Name or ID
   - [ ] Summary: 
