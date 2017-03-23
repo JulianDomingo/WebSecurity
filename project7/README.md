@@ -6,15 +6,16 @@ Time spent: **X** hours spent in total
 
 ## Pentesting Report
 
-1. (Required) Vulnerability Name or ID
-  - [ ] Summary: 
-    - Vulnerability types:
-    - Tested in version:
-    - Fixed in version: 
+1. Authenticated Stored Cross-Site Scripting (XSS) 
+  - [X] Summary: A user with posting capabilities can input a stored XSS vulnerability on a post or page. 
+    - Vulnerability types: XSS
+    - Tested in version: 4.2.2
+    - Fixed in version: 4.2.3
   - [ ] GIF Walkthrough: 
-  - [ ] Steps to recreate: 
-  - [ ] Affected source code:
-    - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
+  - [ ] Steps to recreate: <a href="[caption code=">]</a><a title=" onmouseover=alert('test')  ">link</a> into a wordpress post in HTML mode. Hover mouse on "link" when viewing post.
+  - [ ] Affected source code: N/A
+    - [Link 1](https://ibb.co/hwUUDv)
+
 1. (Required) Vulnerability Name or ID
   - [ ] Summary: 
     - Vulnerability types:
