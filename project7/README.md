@@ -24,7 +24,7 @@ Time spent: **3** hours spent in total
   - [ ] GIF Walkthrough: N/A
   - [ ] Steps to recreate: Post "XSS LOL!!![caption width='1' caption='<a href="' ">]</a><a href="http://onMouseOver='alert(/xss/)' style='display:block;position:absolute;top:0px;left:0px;margin-left:-1000px;margin-top:-1000px;width:99999px;height:99999px;'"></a>" into the content of a new post, then view the post.
   - [ ] Affected source code: N/A
-    - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
+    - [Link 1](http://imgur.com/a/MIeZA)
 
 1. Stored Cross-Site Scripting (XSS) via Theme Name fallback
   - [ ] Summary: 
@@ -34,7 +34,7 @@ Time spent: **3** hours spent in total
   - [ ] GIF Walkthrough: http://giphy.com/gifs/xUA7b4miZMcegzlj2M
   - [ ] Steps to recreate: Shown in "https://www.mehmetince.net/low-severity-wordpress/". May have to add/increase "upload_max_size" directive in php.ini to accomodate uploading theme that's > 2.2 MB (i.e. 'do upload_max_size = 64M'). Apparently by default wordpress sets upload capacity to 2.2. May also need to restart apache2 server for changes to take effect. For my case I just restarted the wordpress container itself.
   - [ ] Affected source code: The provided theme in the guidelines changes the name of the theme to a stored XSS name. Shown in the first link to "Steps to recreate."
-    - [Link 1](https://core.trac.wordpress.org/browser/tags/version/src/source_file.php)
+    - [Link 1](See GIF Walkthrough)
 1. (Optional) Vulnerability Name or ID
   - [ ] Summary: 
     - Vulnerability types:
