@@ -1,7 +1,8 @@
-#Project 10 - Honeypot
+###Project 10 - Honeypot
 
 Time spent: **2** hours spent in total
 
+> NOTE: The 'mhn' directory provided in the repo is simply a clone of the original mhn repo. If you would like to view it, go to "https://github.com/threatstream/mhn".
 > Objective: Setup a honeypot and provide a working demonstration of its features.
 
 ### Required: Overview & Setup
