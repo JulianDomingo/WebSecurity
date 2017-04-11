@@ -22,7 +22,7 @@ Time spent: **2** hours spent in total
 - [X] An example of the data captured by the honeypot (example: IDS logs including IP, request paths, alerts triggered)
     - Included in the GIF below.
 - [X] A screen-cap of the attack being conducted
-<img src="media.giphy.com/media/3o7bui0Q1ifntSUp1u/giphy.gif">
+<img src="https://media.giphy.com/media/3o7bui0Q1ifntSUp1u/giphy.gif">
  
 ### Optional: Features
 - Honeypot
